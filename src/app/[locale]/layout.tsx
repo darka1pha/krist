@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import {Jost } from 'next/font/google'
 import { ReactNode } from 'react';
 import './globals.css'
 import i18nConfig from '@/i18nConfig'
 import { dir } from 'i18next';
 
-const inter = Inter({ subsets: ['latin'] })
+const jost = Jost({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -25,7 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang={locale} dir={dir(locale)}>
-      <body className={inter.className}>{children}</body>
+      <body className={jost.className}>{children}</body>
     </html>
   )
 }
