@@ -8,11 +8,17 @@ export const signUpAction = async (formData: FormData) => {
 	const supabase = createServerActionClient<Database>({ cookies })
 	const email = String(formData.get('email'))
 	const password = String(formData.get('password'))
+	const name = String(formData.get('name'))
+	const address = String(formData.get('address'))
 
 	const { error } = await supabase.auth.signUp({
 		email,
 		password,
 		options: {
+			data: {
+				name,
+				address,
+			},
 			emailRedirectTo: `https://krist.app/api/auth/callback`,
 		},
 	})
