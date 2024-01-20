@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .btn-primary {
-	@apply text-white bg-primary-500 p-4 rounded-xl transition-all ease-in-out;
+	@apply text-white bg-primary-500 p-4 rounded-xl transition-all ease-in-out active:scale-95;
 }
 
 .input {
