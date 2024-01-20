@@ -1,46 +1,53 @@
-'use client';
+'use client'
 
-import { useRouter } from 'next/navigation';
-import { usePathname } from 'next/navigation';
-import { useTranslation } from 'react-i18next';
-import i18nConfig from '@/i18nConfig';
-import { ChangeEvent } from 'react';
+import { useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
+import { useTranslation } from 'react-i18next'
+import i18nConfig from '@/i18nConfig'
+import { ChangeEvent } from 'react'
 
 export default function LanguageChanger() {
-  const { i18n } = useTranslation();
-  const currentLocale = i18n.language;
-  const router = useRouter();
-  const currentPathname = usePathname();
+	const { i18n } = useTranslation()
+	const currentLocale = i18n.language
+	const router = useRouter()
+	const currentPathname = usePathname()
 
-  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const newLocale = e.target.value;
+	const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
+		const newLocale = e.target.value
 
-    // set cookie for next-i18n-router
-    const days = 30;
-    const date = new Date();
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-    const expires = '; expires=' + date.toUTCString();
-    document.cookie = `NEXT_LOCALE=${newLocale};expires=${expires};path=/`;
+		// set cookie for next-i18n-router
+		const days = 30
+		const date = new Date()
+		date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000)
+		const expires = '; expires=' + date.toUTCString()
+		document.cookie = `NEXT_LOCALE=${newLocale};expires=${expires};path=/`
 
-    // redirect to the new locale path
-    if (
-      currentLocale === i18nConfig.defaultLocale &&
-      !i18nConfig.prefixDefault
-    ) {
-      router.push('/' + newLocale + currentPathname);
-    } else {
-      router.push(
-        currentPathname.replace(`/${currentLocale}`, `/${newLocale}`)
-      );
-    }
+		// redirect to the new locale path
+		if (
+			currentLocale === i18nConfig.defaultLocale &&
+			!i18nConfig.prefixDefault
+		) {
+			router.push('/' + newLocale + currentPathname)
+		} else {
+			router.push(currentPathname.replace(`/${currentLocale}`, `/${newLocale}`))
+		}
 
-    router.refresh();
-  };
+		router.refresh()
+	}
 
-  return (
-    <select onChange={handleChange} value={currentLocale}>
-      <option value="en">English</option>
-      <option value="fa">Persian</option>
-    </select>
-  );
+	return (
+		<select
+			onChange={handleChange}
+			className='p-2 rounded-xl bg-primary-500 mx-2 outline-none cursor-pointer text-white'
+			value={
+				!currentLocale
+					? currentPathname.startsWith('/fa')
+						? 'fa'
+						: 'en'
+					: currentLocale
+			}>
+			<option value='en'>English</option>
+			<option value='fa'>Persian</option>
+		</select>
+	)
 }
