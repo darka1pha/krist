@@ -1,215 +1,247 @@
 export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: Json | undefined }
-  | Json[]
+	| string
+	| number
+	| boolean
+	| null
+	| { [key: string]: Json | undefined }
+	| Json[]
 
 export interface Database {
-  public: {
-    Tables: {
-      categories: {
-        Row: {
-          created_at: string
-          id: number
-          name: string | null
-        }
-        Insert: {
-          created_at?: string
-          id?: number
-          name?: string | null
-        }
-        Update: {
-          created_at?: string
-          id?: number
-          name?: string | null
-        }
-        Relationships: []
-      }
-      products: {
-        Row: {
-          category: number | null
-          colors: string[] | null
-          created_at: string
-          description: string | null
-          id: number
-          images: string[] | null
-          name: string | null
-          rating: number | null
-          size: Database["public"]["Enums"]["sizes"][] | null
-        }
-        Insert: {
-          category?: number | null
-          colors?: string[] | null
-          created_at?: string
-          description?: string | null
-          id?: number
-          images?: string[] | null
-          name?: string | null
-          rating?: number | null
-          size?: Database["public"]["Enums"]["sizes"][] | null
-        }
-        Update: {
-          category?: number | null
-          colors?: string[] | null
-          created_at?: string
-          description?: string | null
-          id?: number
-          images?: string[] | null
-          name?: string | null
-          rating?: number | null
-          size?: Database["public"]["Enums"]["sizes"][] | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "products_category_fkey"
-            columns: ["category"]
-            isOneToOne: false
-            referencedRelation: "categories"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      profiles: {
-        Row: {
-          address: string | null
-          avatar_url: string | null
-          full_name: string | null
-          id: string
-          updated_at: string | null
-          username: string | null
-        }
-        Insert: {
-          address?: string | null
-          avatar_url?: string | null
-          full_name?: string | null
-          id: string
-          updated_at?: string | null
-          username?: string | null
-        }
-        Update: {
-          address?: string | null
-          avatar_url?: string | null
-          full_name?: string | null
-          id?: string
-          updated_at?: string | null
-          username?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-    }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      delete_avatar: {
-        Args: {
-          avatar_url: string
-        }
-        Returns: Record<string, unknown>
-      }
-      delete_storage_object: {
-        Args: {
-          bucket: string
-          object: string
-        }
-        Returns: Record<string, unknown>
-      }
-    }
-    Enums: {
-      sizes: "S" | "M" | "L" | "XL" | "XXL"
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
-  }
+	public: {
+		Tables: {
+			categories: {
+				Row: {
+					created_at: string
+					id: number
+					name: string | null
+					poster_url: string | null
+				}
+				Insert: {
+					created_at?: string
+					id?: number
+					name?: string | null
+					poster_url?: string | null
+				}
+				Update: {
+					created_at?: string
+					id?: number
+					name?: string | null
+					poster_url?: string | null
+				}
+				Relationships: []
+			}
+			products: {
+				Row: {
+					category: number | null
+					colors: string[] | null
+					created_at: string
+					description: string | null
+					id: number
+					images: string[] | null
+					name: string | null
+					rating: number | null
+					size: Database['public']['Enums']['sizes'][] | null
+				}
+				Insert: {
+					category?: number | null
+					colors?: string[] | null
+					created_at?: string
+					description?: string | null
+					id?: number
+					images?: string[] | null
+					name?: string | null
+					rating?: number | null
+					size?: Database['public']['Enums']['sizes'][] | null
+				}
+				Update: {
+					category?: number | null
+					colors?: string[] | null
+					created_at?: string
+					description?: string | null
+					id?: number
+					images?: string[] | null
+					name?: string | null
+					rating?: number | null
+					size?: Database['public']['Enums']['sizes'][] | null
+				}
+				Relationships: [
+					{
+						foreignKeyName: 'products_category_fkey'
+						columns: ['category']
+						isOneToOne: false
+						referencedRelation: 'subcategories'
+						referencedColumns: ['id']
+					}
+				]
+			}
+			profiles: {
+				Row: {
+					address: string | null
+					avatar_url: string | null
+					id: string
+					name: string | null
+					updated_at: string | null
+				}
+				Insert: {
+					address?: string | null
+					avatar_url?: string | null
+					id: string
+					name?: string | null
+					updated_at?: string | null
+				}
+				Update: {
+					address?: string | null
+					avatar_url?: string | null
+					id?: string
+					name?: string | null
+					updated_at?: string | null
+				}
+				Relationships: [
+					{
+						foreignKeyName: 'profiles_id_fkey'
+						columns: ['id']
+						isOneToOne: true
+						referencedRelation: 'users'
+						referencedColumns: ['id']
+					}
+				]
+			}
+			subcategories: {
+				Row: {
+					category: number
+					created_at: string
+					id: number
+					name: string | null
+					poster_url: string | null
+				}
+				Insert: {
+					category: number
+					created_at?: string
+					id?: number
+					name?: string | null
+					poster_url?: string | null
+				}
+				Update: {
+					category?: number
+					created_at?: string
+					id?: number
+					name?: string | null
+					poster_url?: string | null
+				}
+				Relationships: [
+					{
+						foreignKeyName: 'subcategories_category_fkey'
+						columns: ['category']
+						isOneToOne: false
+						referencedRelation: 'categories'
+						referencedColumns: ['id']
+					}
+				]
+			}
+		}
+		Views: {
+			[_ in never]: never
+		}
+		Functions: {
+			delete_avatar: {
+				Args: {
+					avatar_url: string
+				}
+				Returns: Record<string, unknown>
+			}
+			delete_storage_object: {
+				Args: {
+					bucket: string
+					object: string
+				}
+				Returns: Record<string, unknown>
+			}
+		}
+		Enums: {
+			sizes: 'S' | 'M' | 'L' | 'XL' | 'XXL'
+		}
+		CompositeTypes: {
+			[_ in never]: never
+		}
+	}
 }
 
 export type Tables<
-  PublicTableNameOrOptions extends
-    | keyof (Database["public"]["Tables"] & Database["public"]["Views"])
-    | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
-        Database[PublicTableNameOrOptions["schema"]]["Views"])
-    : never = never
+	PublicTableNameOrOptions extends
+		| keyof (Database['public']['Tables'] & Database['public']['Views'])
+		| { schema: keyof Database },
+	TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+		? keyof (Database[PublicTableNameOrOptions['schema']]['Tables'] &
+				Database[PublicTableNameOrOptions['schema']]['Views'])
+		: never = never
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
-      Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
-      Row: infer R
-    }
-    ? R
-    : never
-  : PublicTableNameOrOptions extends keyof (Database["public"]["Tables"] &
-      Database["public"]["Views"])
-  ? (Database["public"]["Tables"] &
-      Database["public"]["Views"])[PublicTableNameOrOptions] extends {
-      Row: infer R
-    }
-    ? R
-    : never
-  : never
+	? (Database[PublicTableNameOrOptions['schema']]['Tables'] &
+			Database[PublicTableNameOrOptions['schema']]['Views'])[TableName] extends {
+			Row: infer R
+	  }
+		? R
+		: never
+	: PublicTableNameOrOptions extends keyof (Database['public']['Tables'] &
+			Database['public']['Views'])
+	? (Database['public']['Tables'] &
+			Database['public']['Views'])[PublicTableNameOrOptions] extends {
+			Row: infer R
+	  }
+		? R
+		: never
+	: never
 
 export type TablesInsert<
-  PublicTableNameOrOptions extends
-    | keyof Database["public"]["Tables"]
-    | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never
+	PublicTableNameOrOptions extends
+		| keyof Database['public']['Tables']
+		| { schema: keyof Database },
+	TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+		? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+		: never = never
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Insert: infer I
-    }
-    ? I
-    : never
-  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Insert: infer I
-    }
-    ? I
-    : never
-  : never
+	? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+			Insert: infer I
+	  }
+		? I
+		: never
+	: PublicTableNameOrOptions extends keyof Database['public']['Tables']
+	? Database['public']['Tables'][PublicTableNameOrOptions] extends {
+			Insert: infer I
+	  }
+		? I
+		: never
+	: never
 
 export type TablesUpdate<
-  PublicTableNameOrOptions extends
-    | keyof Database["public"]["Tables"]
-    | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never
+	PublicTableNameOrOptions extends
+		| keyof Database['public']['Tables']
+		| { schema: keyof Database },
+	TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+		? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+		: never = never
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Update: infer U
-    }
-    ? U
-    : never
-  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Update: infer U
-    }
-    ? U
-    : never
-  : never
+	? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+			Update: infer U
+	  }
+		? U
+		: never
+	: PublicTableNameOrOptions extends keyof Database['public']['Tables']
+	? Database['public']['Tables'][PublicTableNameOrOptions] extends {
+			Update: infer U
+	  }
+		? U
+		: never
+	: never
 
 export type Enums<
-  PublicEnumNameOrOptions extends
-    | keyof Database["public"]["Enums"]
-    | { schema: keyof Database },
-  EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
-    : never = never
+	PublicEnumNameOrOptions extends
+		| keyof Database['public']['Enums']
+		| { schema: keyof Database },
+	EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
+		? keyof Database[PublicEnumNameOrOptions['schema']]['Enums']
+		: never = never
 > = PublicEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
-  : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
-  ? Database["public"]["Enums"][PublicEnumNameOrOptions]
-  : never
+	? Database[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
+	: PublicEnumNameOrOptions extends keyof Database['public']['Enums']
+	? Database['public']['Enums'][PublicEnumNameOrOptions]
+	: never
