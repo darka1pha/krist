@@ -12,17 +12,21 @@ const ProductCard = () => {
 					objectFit='cover'
 					layout='fill'
 				/>
-				<div className='z-10 w-fit absolute top-0 left-[75%] p-4 flex flex-col opacity-0 group-hover:opacity-100 transition-all ease-in-out'>
-					<IconButton className='mb-2'>
-						<Star1 size={18} className='text-primary-500' />
-					</IconButton>
-					<IconButton>
-						<Eye size={18} className='text-primary-500' />
-					</IconButton>
+				<div className='z-10 w-full h-full absolute top-0 flex flex-col opacity-0 group-hover:opacity-100 transition-all ease-in-out items-end'>
+					<div className='flex-1 flex flex-col p-2'>
+						<IconButton className='mb-2 w-fit'>
+							<Star1 size={18} className='text-primary-500' />
+						</IconButton>
+						<IconButton className='w-fit'>
+							<Eye size={18} className='text-primary-500' />
+						</IconButton>
+					</div>
+					<div className='flex-1 w-full justify-center items-end flex p-2 md:p-4'>
+						<button className='btn-secondary w-full'>
+							Add To Cart
+						</button>
+					</div>
 				</div>
-				<button className='btn-secondary absolute h-fit z-10 top-[80%] mx-auto left-1/2 transform -translate-x-1/2 w-[90%] opacity-0 group-hover:opacity-100 transition-all ease-in-out'>
-					Add To Cart
-				</button>
 			</div>
 			<div className='pl-2 mt-1'>
 				<p className='text-lg font-bold mb-1'>Product Brand</p>

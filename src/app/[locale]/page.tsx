@@ -15,7 +15,6 @@ export const metadata: Metadata = {
 	title: 'Krist | Elevate Your Style, Accentuate Your Elegance',
 	description:
 		'Discover exquisite accessories at Krist - where style meets sophistication. Explore a curated collection of fashion-forward pieces designed to elevate your look. Find the perfect accents to express your unique taste and embrace a world of timeless elegance with Krist.',
-
 }
 
 export default async function Home({
@@ -37,7 +36,7 @@ export default async function Home({
 				<Hero />
 				<CardsSlider data={categories.data} />
 				<div className='flex justify-center items-center flex-col mt-24'>
-					<h1 className='text-5xl font-bold'>Our Best Sellers</h1>
+					<h1 className='text-3xl md:text-5xl font-bold'>Our Best Sellers</h1>
 					<CardsGrid>
 						<ProductCard />
 						<ProductCard />

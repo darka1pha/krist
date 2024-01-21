@@ -35,9 +35,9 @@ const CardsSlider = ({
 
 	return (
 		<div className='overflow-hidden px-8 mb-16'>
-			<div className='flex my-10 justify-between items-center'>
-				<h2 className='text-3xl font-bold'>Shop By Category</h2>
-				<div>
+			<div className='flex my-10 justify-between items-center flex-col md:flex-row'>
+				<h2 className='text-2xl md:text-3xl font-bold'>Shop By Category</h2>
+				<div className='mt-6 md:mt-0'>
 					<button
 						disabled={!allowLeft}
 						onClick={onPrevSlide}
