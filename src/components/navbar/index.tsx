@@ -48,7 +48,6 @@ const Navbar = async ({ locale }: { locale: string }) => {
 					<ShoppingCart className='mx-2 text-black dark:text-white' size={28} />
 				</Link>
 				<DarkModeSwitch />
-				<LanguageChanger />
 				<Link href={'/auth/sign-in'}>
 					<button className='btn-primary ml-2 w-24'>{t('signin')}</button>
 				</Link>
