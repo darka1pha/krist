@@ -1,5 +1,7 @@
 import TranslationsProvider from '@/components/translation/translationsProvider'
 import initTranslations from '../i18n'
+import Hero from '@/components/hero'
+import CardsSlider from '@/components/cardsSlider'
 
 const i18nNamespaces = ['home']
 
@@ -14,12 +16,9 @@ export default async function Home({
 			namespaces={i18nNamespaces}
 			locale={locale}
 			resources={resources}>
-			<main className='flex min-h-screen flex-col items-center justify-between p-24'>
-				<button className='btn-primary'>{t('hello')}</button>
-				<div className='flex flex-col'>
-					<label className='form_label'>Input Label</label>
-					<input className='input' placeholder='input' />
-				</div>
+			<main>
+				<Hero />
+				<CardsSlider />
 			</main>
 		</TranslationsProvider>
 	)
