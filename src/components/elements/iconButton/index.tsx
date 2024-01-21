@@ -1,4 +1,5 @@
-import { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from 'react'
+import { cn } from '@/app/utils'
+import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react'
 
 const IconButton = (
 	props: DetailedHTMLProps<
@@ -7,7 +8,14 @@ const IconButton = (
 	>
 ) => {
 	return (
-		<button className='p-2 rounded-full bg-zinc-700' {...props}>
+		<button
+			{...{
+				...props,
+				className: cn(
+					'p-2 rounded-full bg-white active:scale-95',
+					props.className
+				),
+			}}>
 			{props.children}
 		</button>
 	)
