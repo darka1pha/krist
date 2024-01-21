@@ -7,8 +7,13 @@ import Swiper from 'swiper'
 
 // Import Swiper styles
 import 'swiper/css'
+import { Database } from '@/types/supabase'
 
-const CardsSlider = () => {
+const CardsSlider = ({
+	data,
+}: {
+	data: Database['public']['Tables']['categories']['Row'][] | null
+}) => {
 	const [swiperRef, setSwiperRef] = useState<Swiper | null>(null)
 	const [allowLeft, setAllowLeft] = useState(false)
 	const [allowRight, setAllowRight] = useState(true)
@@ -66,24 +71,11 @@ const CardsSlider = () => {
 							spaceBetween: 30,
 						},
 					}}>
-					<SwiperSlide>
-						<CategoryCard />
-					</SwiperSlide>
-					<SwiperSlide>
-						<CategoryCard />
-					</SwiperSlide>
-					<SwiperSlide>
-						<CategoryCard />
-					</SwiperSlide>
-					<SwiperSlide>
-						<CategoryCard />
-					</SwiperSlide>
-					<SwiperSlide>
-						<CategoryCard />
-					</SwiperSlide>
-					<SwiperSlide>
-						<CategoryCard />
-					</SwiperSlide>
+					{data?.map(({ id, name, poster_url }) => (
+						<SwiperSlide key={id}>
+							<CategoryCard id={id} name={name} image={poster_url} />
+						</SwiperSlide>
+					))}
 				</SwiperContainer>
 			</div>
 		</div>

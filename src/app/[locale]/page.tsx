@@ -4,6 +4,9 @@ import Hero from '@/components/hero'
 import CardsSlider from '@/components/cardsSlider'
 import CardsGrid from '@/components/cardsGrid'
 import { ProductCard } from '@/components/elements'
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { Database } from '@/types/supabase'
+import { cookies } from 'next/headers'
 
 const i18nNamespaces = ['home']
 
@@ -13,6 +16,10 @@ export default async function Home({
 	params: { locale: string }
 }) {
 	const { t, resources } = await initTranslations(locale, i18nNamespaces)
+	const supabase = createServerComponentClient<Database>({ cookies })
+
+	const categories = await supabase.from('categories').select('*')
+
 	return (
 		<TranslationsProvider
 			namespaces={i18nNamespaces}
@@ -20,7 +27,7 @@ export default async function Home({
 			resources={resources}>
 			<main>
 				<Hero />
-				<CardsSlider />
+				<CardsSlider data={categories.data} />
 				<div className='flex justify-center items-center flex-col mt-24'>
 					<h1 className='text-5xl font-bold'>Our Best Sellers</h1>
 					<CardsGrid>
