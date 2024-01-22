@@ -26,6 +26,7 @@ export default async function Home({
 	const supabase = createServerComponentClient<Database>({ cookies })
 
 	const categories = await supabase.from('categories').select('*')
+	const products = await supabase.from('products').select('*')
 
 	return (
 		<TranslationsProvider
@@ -36,14 +37,15 @@ export default async function Home({
 				<Hero />
 				<CardsSlider data={categories.data} />
 				<div className='flex justify-center items-center flex-col mt-24'>
-					<h1 className='text-3xl md:text-5xl font-bold'>Our Best Sellers</h1>
+					<h1 className='text-3xl md:text-5xl font-bold'>
+						{t('products_title')}
+					</h1>
 					<CardsGrid>
-						<ProductCard />
-						<ProductCard />
-						<ProductCard />
-						<ProductCard />
-						<ProductCard />
-						<ProductCard />
+						{
+							products.data?.map((product,key)=>(
+								<ProductCard key={key} product={product}/>
+							))
+						}
 					</CardsGrid>
 				</div>
 			</main>
