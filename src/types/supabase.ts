@@ -40,7 +40,7 @@ export interface Database {
           id: number
           images: string[]
           name: string
-          price: number | null
+          price: number
           rating: number
           size: Database["public"]["Enums"]["sizes"][]
         }
@@ -53,7 +53,7 @@ export interface Database {
           id?: number
           images: string[]
           name: string
-          price?: number | null
+          price: number
           rating: number
           size: Database["public"]["Enums"]["sizes"][]
         }
@@ -66,7 +66,7 @@ export interface Database {
           id?: number
           images?: string[]
           name?: string
-          price?: number | null
+          price?: number
           rating?: number
           size?: Database["public"]["Enums"]["sizes"][]
         }
