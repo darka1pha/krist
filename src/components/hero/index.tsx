@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 const Hero = () => {
 	return (
-		<div className='flex p-2 md:p-8 w-full h-[50vh] md:h-[85vh]'>
+		<div className='flex w-full h-[50vh] md:h-[85vh]'>
 			<div className='h-full w-full rounded-xl overflow-hidden relative flex items-center justify-center sm:justify-start'>
 				<Image
 					className='object-cover h-full w-full absolute -z-10'
