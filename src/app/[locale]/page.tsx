@@ -33,7 +33,7 @@ export default async function Home({
 			namespaces={i18nNamespaces}
 			locale={locale}
 			resources={resources}>
-			<main>
+			<main className='paddings'>
 				<Hero />
 				<CardsSlider data={categories.data} />
 				<div className='flex justify-center items-center flex-col mt-24'>
