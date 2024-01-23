@@ -2,7 +2,7 @@ import { CategoriesProps } from '@/types'
 import ProductsCategory from './productsCategory'
 
 const getCategories = async () => {
-	const categories = await fetch('http://localhost:3000/api/categories')
+	const categories = await fetch('https://krist.vercel.app/api/categories')
 
 	return await categories.json()
 }
