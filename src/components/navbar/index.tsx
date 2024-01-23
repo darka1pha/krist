@@ -39,15 +39,7 @@ const Navbar = async ({ locale }: { locale: string }) => {
 					</Link>
 				</li>
 			</ul>
-
 			<div className='flex justify-end items-center flex-1'>
-				<Link href={'/favorites'}>
-					<Heart className='mx-2 text-black dark:text-white' size={28} />
-				</Link>
-				<Link href={'/cart'}>
-					<ShoppingCart className='mx-2 text-black dark:text-white' size={28} />
-				</Link>
-				<DarkModeSwitch />
 				<Link href={'/auth/sign-in'}>
 					<button className='btn-primary ml-2 w-24'>{t('signin')}</button>
 				</Link>
