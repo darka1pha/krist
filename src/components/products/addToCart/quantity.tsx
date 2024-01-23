@@ -1,5 +1,5 @@
 'use client'
-import { updateSearchParams } from '@/app/utils'
+import { addSearchParams } from '@/app/utils'
 import { Add, Minus } from 'iconsax-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
@@ -8,13 +8,13 @@ const Quantity = () => {
 	const router = useRouter()
 	const onAddQty = () => {
 		const currentQyt = params.has('qty') ? Number(params.get('qty')) : 1
-		const newUrl = updateSearchParams('qty', String(currentQyt + 1))
+		const newUrl = addSearchParams('qty', String(currentQyt + 1))
 		router.push(newUrl)
 	}
 	const onMinusQty = () => {
 		const currentQty = params.has('qty') ? Number(params.get('qty')) : 1
 		if (currentQty !== 1) {
-			const newUrl = updateSearchParams('qty', String(currentQty - 1))
+			const newUrl = addSearchParams('qty', String(currentQty - 1))
 			router.push(newUrl)
 		}
 	}

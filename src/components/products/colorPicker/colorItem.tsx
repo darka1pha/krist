@@ -1,5 +1,5 @@
 'use client'
-import { cn, updateSearchParams } from '@/app/utils'
+import { cn, addSearchParams } from '@/app/utils'
 import { useRouter } from 'next/navigation'
 
 const ColorItem = ({
@@ -12,7 +12,7 @@ const ColorItem = ({
 	const router = useRouter()
 	return (
 		<div
-			onClick={() => router.push(updateSearchParams('color', color))}
+			onClick={() => router.push(addSearchParams('color', color))}
 			style={{
 				backgroundColor: color,
 			}}
