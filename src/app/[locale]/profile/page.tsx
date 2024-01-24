@@ -10,8 +10,6 @@ const Profile = async () => {
 
 	const { data } = await supabase.from('profiles').select('*').single()
 
-	console.log(data?.name)
-
 	return (
 		<main className='flex justify-center items-center min-h-screen w-full'>
 			{user ? (
