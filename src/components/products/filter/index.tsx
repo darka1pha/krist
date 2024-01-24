@@ -3,7 +3,6 @@ import ProductsCategory from './productsCategory'
 
 const getCategories = async () => {
 	const categories = await fetch('https://krist.vercel.app/api/categories')
-
 	return await categories.json()
 }
 
