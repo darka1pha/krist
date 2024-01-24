@@ -5,6 +5,7 @@ import LanguageChanger from '../translation/languageChanger'
 import initTranslations from '@/app/i18n'
 import { IconButton } from '../elements'
 import { Heart, ShoppingCart } from 'iconsax-react'
+import AuthButton from './authButton'
 
 const i18nNamespaces = ['navbar']
 
@@ -39,11 +40,7 @@ const Navbar = async ({ locale }: { locale: string }) => {
 					</Link>
 				</li>
 			</ul>
-			<div className='flex justify-end items-center flex-1'>
-				<Link href={'/auth/sign-in'}>
-					<button className='btn-primary ml-2 w-24'>{t('signin')}</button>
-				</Link>
-			</div>
+			<AuthButton />
 		</nav>
 	)
 }
