@@ -1,5 +1,3 @@
-import TranslationsProvider from '@/components/translation/translationsProvider'
-import initTranslations from '../i18n'
 import Hero from '@/components/hero'
 import CardsSlider from '@/components/cardsSlider'
 import CardsGrid from '@/components/cardsGrid'
@@ -8,6 +6,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Database } from '@/types/supabase'
 import { cookies } from 'next/headers'
 import { Metadata } from 'next'
+import initTranslations from './i18n'
 
 const i18nNamespaces = ['home']
 
@@ -29,10 +28,6 @@ export default async function Home({
 	const products = await supabase.from('products').select('*')
 
 	return (
-		<TranslationsProvider
-			namespaces={i18nNamespaces}
-			locale={locale}
-			resources={resources}>
 			<main className='paddings'>
 				<Hero />
 				<CardsSlider data={categories.data} />
@@ -49,6 +44,5 @@ export default async function Home({
 					</CardsGrid>
 				</div>
 			</main>
-		</TranslationsProvider>
 	)
 }

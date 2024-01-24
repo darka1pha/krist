@@ -9,7 +9,7 @@ const getCategories = async () => {
 
 const Filter = async () => {
 	const categories = (await getCategories()) as CategoriesProps[]
-
+console.log(categories)
 	return (
 		<div className='col-span-3'>
 			<ProductsCategory categories={categories} />
