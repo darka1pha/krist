@@ -40,7 +40,7 @@ const Navbar = async ({ locale }: { locale: string }) => {
 					</Link>
 				</li>
 			</ul>
-			<AuthButton />
+			<AuthButton locale={locale} />
 		</nav>
 	)
 }
