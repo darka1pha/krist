@@ -4,7 +4,7 @@ import { Tables } from '@/types/supabase'
 
 const Container = ({ products }: { products: Tables<'products'>[] | null }) => {
 	return (
-		<div className='col-span-9'>
+		<div className='col-span-12 md:col-span-9'>
 			<h1 className='text-3xl font-bold '>Shop</h1>
 			<CardsGrid>
 				{products?.map((product, key) => (
