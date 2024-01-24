@@ -12,9 +12,10 @@ export const getProducts = async ({
 }) => {
 	'use server'
 	const supabase = createServerActionClient<Database>({ cookies })
-	const filterCategories = searchParams.category.split(',')
+	
 
 	if (!!searchParams.category && !searchParams.sub) {
+		const filterCategories = searchParams.category.split(',')
 		const { data: categories } = await supabase
 			.from('categories')
 			.select('id')
