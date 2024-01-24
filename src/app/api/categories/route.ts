@@ -29,5 +29,11 @@ export async function GET() {
 		tempCategories = [...tempCategories, tempCategory]
 	})
 
+	console.log({
+		categories,
+		subcategories,
+		responseData: tempCategories.slice(1, tempCategories.length),
+	})
+
 	return NextResponse.json(tempCategories.slice(1, tempCategories.length))
 }
