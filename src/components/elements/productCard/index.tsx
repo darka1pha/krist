@@ -19,7 +19,7 @@ const ProductCard = ({ product }: { product: Tables<'products'> }) => {
 						<IconButton className='mb-2 w-fit'>
 							<Star1 size={18} className='text-primary-500' />
 						</IconButton>
-						<Link href={`/product/${product.id}`}>
+						<Link href={`/products/${product.id}`}>
 							<IconButton className='w-fit'>
 								<Eye size={18} className='text-primary-500' />
 							</IconButton>
