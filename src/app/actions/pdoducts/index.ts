@@ -12,7 +12,6 @@ export const getProducts = async ({
 }) => {
 	'use server'
 	const supabase = createServerActionClient<Database>({ cookies })
-	
 
 	if (!!searchParams.category && !searchParams.sub) {
 		const filterCategories = searchParams.category.split(',')
@@ -64,8 +63,10 @@ export const getProducts = async ({
 export const getCategories = async () => {
 	const supabase = createRouteHandlerClient<Database>({ cookies })
 
-	const { data: categories } = await supabase.from('categories').select('*')
-	const { data: subcategories } = await supabase
+	const { data: categories, error: categoryError } = await supabase
+		.from('categories')
+		.select('*')
+	const { data: subcategories, error: subError } = await supabase
 		.from('subcategories')
 		.select('*')
 
@@ -86,5 +87,8 @@ export const getCategories = async () => {
 		})
 		tempCategories = [...tempCategories, tempCategory]
 	})
-	return tempCategories.slice(1, tempCategories.length)
+	return {
+		data: tempCategories.slice(1, tempCategories.length),
+		error: categoryError ? categoryError : subError ? subError : null,
+	}
 }
