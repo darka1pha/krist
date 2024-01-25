@@ -1,10 +1,6 @@
-import DarkModeSwitch from '../theme/darkModeSwitch'
 import Link from 'next/link'
 import Image from 'next/image'
-import LanguageChanger from '../translation/languageChanger'
 import initTranslations from '@/app/i18n'
-import { IconButton } from '../elements'
-import { Heart, ShoppingCart } from 'iconsax-react'
 import AuthButton from './authButton'
 
 const i18nNamespaces = ['navbar']
