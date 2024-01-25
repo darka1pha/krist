@@ -2,7 +2,7 @@ const Loading = () => {
 	return (
 		<main className='grid grid-cols-12 gap-5 min-h-screen paddings'>
 			<div className='col-span-12 md:col-span-3'>
-				<div className='bg-gray-200 animate-pulse min-h-[60vh] w-[300px] rounded-xl' />
+				<div className='bg-gray-200 animate-pulse min-h-[30vh] md:min-h-[60vh] w-full rounded-xl' />
 			</div>
 			<div className='col-span-12 md:col-span-9'>
 				<h1 className='text-3xl font-bold '>Shop</h1>
