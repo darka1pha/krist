@@ -26,7 +26,7 @@ const Navbar = async ({ locale }: { locale: string }) => {
 					</Link>
 				</li>
 				<li className='mx-4'>
-					<Link href={'/shop'}>
+					<Link href={'/products'}>
 						<p>{t('shop')}</p>
 					</Link>
 				</li>
