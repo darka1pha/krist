@@ -25,8 +25,18 @@ export default async function Home({
 	const { t, resources } = await initTranslations(locale, i18nNamespaces)
 	const supabase = createServerComponentClient<Database>({ cookies })
 
-	const categories = await supabase.from('categories').select('*')
-	const products = await supabase.from('products').select('*')
+	const { data: categories, error: categoriesError } = await supabase
+		.from('categories')
+		.select('*')
+	const { data: products, error: productsError } = await supabase
+		.from('products')
+		.select('*')
+
+	if (productsError || categoriesError) {
+		throw new Error(productsError?.message ?? categoriesError?.message, {
+			cause: productsError?.details || categoriesError?.message,
+		})
+	}
 
 	return (
 		<TranslationsProvider
@@ -35,17 +45,15 @@ export default async function Home({
 			resources={resources}>
 			<main className='paddings'>
 				<Hero />
-				<CardsSlider data={categories.data} />
+				<CardsSlider data={categories} />
 				<div className='flex justify-center items-center flex-col mt-24'>
 					<h1 className='text-3xl md:text-5xl font-bold'>
 						{t('products_title')}
 					</h1>
 					<CardsGrid>
-						{
-							products.data?.map((product,key)=>(
-								<ProductCard key={key} product={product}/>
-							))
-						}
+						{products?.map((product, key) => (
+							<ProductCard key={key} product={product} />
+						))}
 					</CardsGrid>
 				</div>
 			</main>
