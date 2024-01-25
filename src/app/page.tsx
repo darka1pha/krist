@@ -1,5 +1,5 @@
 import TranslationsProvider from '@/components/translation/translationsProvider'
-import initTranslations from '../i18n'
+import initTranslations from './i18n'
 import Hero from '@/components/hero'
 import CardsSlider from '@/components/cardsSlider'
 import CardsGrid from '@/components/cardsGrid'

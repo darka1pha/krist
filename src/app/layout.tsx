@@ -25,7 +25,7 @@ export default function RootLayout({
 	params: { locale: string }
 }) {
 	return (
-		<html data-theme='light' className='dark' lang={locale} dir={dir(locale)}>
+		<html data-theme='light' className='dark' lang={locale}>
 			<body className={jost.className}>
 				<Navbar locale={locale} />
 				{children}
