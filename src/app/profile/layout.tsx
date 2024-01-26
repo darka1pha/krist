@@ -21,7 +21,7 @@ const ProfileLayout = async ({
 	return (
 		<main className='paddings'>
 			{user ? (
-				<div className='grid gap-4 grid-cols-12 w-full min-h-[calc(100vh-80px)]'>
+				<div className='grid gap-5 grid-cols-12 w-full min-h-[calc(100vh-80px)]'>
 					<Menu locale={locale} />
 					{children}
 				</div>
