@@ -1,0 +1,9 @@
+{
+	"title": "My Profile",
+  "form":{
+    "edit":"Edit Profile",
+    "fullname":"Fullname",
+    "address":"Address",
+    "email":"Email"
+  }
+}
