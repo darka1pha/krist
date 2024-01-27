@@ -2,6 +2,7 @@ import { Database } from '@/types/supabase'
 import { createServerActionClient } from '@supabase/auth-helpers-nextjs'
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
+import { revalidatePath } from 'next/cache'
 
 export const updateProfileAction = async (formData: FormData) => {
 	'use server'
@@ -15,14 +16,12 @@ export const updateProfileAction = async (formData: FormData) => {
 	const { data: infoUpdateData, error: infoError } = await supabase
 		.from('profiles')
 		.update({ address, name })
-		.eq('id', user?.id || '')
-	const { data: emailUpdateData, error: emailError } =
-		await supabase.auth.updateUser({ email })
-	console.log(infoError)
-	console.log(emailUpdateData)
-	if (emailError || infoError) {
+		.eq('id', user?.id!)
+
+	if (infoError) {
 		redirect(`/profile?error=${infoError?.message}`)
 	} else {
-		redirect('/profile?message=Update Succcessfully. :)')
+		revalidatePath('/profile')
+		redirect('/profile')
 	}
 }

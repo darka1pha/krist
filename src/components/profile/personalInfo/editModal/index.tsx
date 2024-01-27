@@ -23,13 +23,13 @@ const EditModal = async ({ locale }: { locale: string }) => {
 			<div className='absolute right-[50%] top-[50%] transform translate-x-[50%] translate-y-[-50%] z-20 bg-white shadow-md rounded-xl p-5'>
 				<form className='grid grid-cols-2 w-full gap-4'>
 					<div className='col-span-1 flex flex-col'>
-						<label className='form_label mb-2' htmlFor='fullname'>
-							{t('form.fullname')}
+						<label className='form_label mb-2' htmlFor='name'>
+							{t('form.name')}
 						</label>
 						<input
 							className='input min-w-72'
 							name='name'
-							placeholder={t('fullname_placeholder')}
+							placeholder={t('form.name_placeholder')}
 							required
 							defaultValue={data?.name}
 						/>
@@ -39,10 +39,12 @@ const EditModal = async ({ locale }: { locale: string }) => {
 							{t('form.email')}
 						</label>
 						<input
-							defaultValue={user?.email}
+							value={user?.email}
+							disabled
+							readOnly
 							className='input min-w-72'
 							name='email'
-							placeholder={t('email_placeholder')}
+							placeholder={t('form.email_placeholder')}
 							required
 						/>
 					</div>
@@ -54,7 +56,7 @@ const EditModal = async ({ locale }: { locale: string }) => {
 							defaultValue={data?.address}
 							className='input'
 							name='address'
-							placeholder={t('address_placeholder')}
+							placeholder={t('form.address_placeholder')}
 							required
 						/>
 					</div>

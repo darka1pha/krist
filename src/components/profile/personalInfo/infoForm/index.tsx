@@ -1,7 +1,4 @@
 import initTranslations from '@/app/i18n'
-import { Database } from '@/types/supabase'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
 
 const InfoForm = async ({
 	locale,
@@ -19,10 +16,11 @@ const InfoForm = async ({
 	return (
 		<div className='grid grid-cols-2 w-full gap-4'>
 			<div className='col-span-1 flex flex-col'>
-				<label className='form_label mb-2' htmlFor='fullname'>
-					{t('form.fullname')}
+				<label className='form_label mb-2' htmlFor='name'>
+					{t('form.name')}
 				</label>
 				<input
+					readOnly
 					className='input'
 					name='name'
 					placeholder={t('fullname_placeholder')}
@@ -35,6 +33,7 @@ const InfoForm = async ({
 					{t('form.email')}
 				</label>
 				<input
+					readOnly
 					value={email}
 					className='input'
 					name='email'
@@ -47,6 +46,7 @@ const InfoForm = async ({
 					{t('form.address')}
 				</label>
 				<input
+					readOnly
 					value={address}
 					className='input'
 					name='address'

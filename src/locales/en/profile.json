@@ -1,9 +1,12 @@
 {
 	"title": "My Profile",
-  "form":{
-    "edit":"Edit Profile",
-    "fullname":"Fullname",
-    "address":"Address",
-    "email":"Email"
-  }
+	"form": {
+		"edit": "Edit Profile",
+		"name": "Fullname",
+		"address": "Address",
+		"email": "Email",
+		"name_placeholder": "Enter your fullname",
+		"address_placeholder": "Enter your address",
+		"email_placeholder": "you@example.com"
+	}
 }
