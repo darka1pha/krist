@@ -30,7 +30,6 @@ export const generateMetadata = async ({
 }
 
 const Product = async ({ params: { id } }: { params: { id: number } }) => {
-	await new Promise((resolve) => setTimeout(resolve, 100000))
 	const supabase = createServerComponentClient<Database>({ cookies })
 	const { data: product } = await supabase
 		.from('products')
