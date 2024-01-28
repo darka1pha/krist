@@ -5,7 +5,7 @@ import { cookies } from 'next/headers'
 import { Database } from '@/types/supabase'
 import MenuButton from './menuButton'
 
-import { Bag, Profile, Star1 } from 'iconsax-react'
+import { Bag, Profile, Routing, Star1 } from 'iconsax-react'
 
 const menuButtons = [
 	{
@@ -22,6 +22,11 @@ const menuButtons = [
 		name: 'Orders',
 		icon: <Bag size={18} />,
 		url: '/profile/orders',
+	},
+	{
+		name: 'Addresses',
+		icon: <Routing size={18} />,
+		url: '/profile/addresses',
 	},
 ]
 
