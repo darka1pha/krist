@@ -37,9 +37,15 @@ const AddressesPage = async ({
 	return (
 		<div className='col-span-9'>
 			<AddressesHeader locale={locale} />
-			<div>
-				{data?.map(({ city, details, id, name, phone, state }) => (
-					<AddressCard key={id} />
+			<div className='mt-2'>
+				{data?.map(({ details, id, name, phone }) => (
+					<AddressCard
+						details={details}
+						id={id}
+						name={name}
+						phone={phone}
+						key={id}
+					/>
 				))}
 			</div>
 			{modal === 'true' && (
