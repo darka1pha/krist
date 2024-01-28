@@ -9,6 +9,47 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      addresses: {
+        Row: {
+          city: string
+          created_at: string
+          details: string | null
+          id: number
+          name: string
+          phone: string
+          state: string | null
+          user_id: string | null
+        }
+        Insert: {
+          city: string
+          created_at?: string
+          details?: string | null
+          id?: number
+          name: string
+          phone: string
+          state?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          city?: string
+          created_at?: string
+          details?: string | null
+          id?: number
+          name?: string
+          phone?: string
+          state?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "addresses_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       categories: {
         Row: {
           created_at: string
