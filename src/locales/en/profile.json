@@ -8,5 +8,17 @@
 		"name_placeholder": "Enter your fullname",
 		"address_placeholder": "Enter your address",
 		"email_placeholder": "you@example.com"
+	},
+	"addresses": {
+		"title": "Addresses",
+		"form": {
+			"name": "Name",
+			"phone": "Mobile Number",
+			"city": "City",
+			"state": "State",
+			"details": "Address Details",
+			"details_placeholder": "Street, Flat, House no ...",
+			"phone_placeholder": "Iran mobile format"
+		}
 	}
 }
