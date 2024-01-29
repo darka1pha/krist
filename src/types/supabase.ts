@@ -73,27 +73,21 @@ export interface Database {
       }
       favorites: {
         Row: {
-          brand: string
           created_at: string
           id: number
-          name: string
-          price: number
+          liked: boolean
           user_id: string
         }
         Insert: {
-          brand: string
           created_at?: string
           id?: number
-          name: string
-          price: number
+          liked: boolean
           user_id: string
         }
         Update: {
-          brand?: string
           created_at?: string
           id?: number
-          name?: string
-          price?: number
+          liked?: boolean
           user_id?: string
         }
         Relationships: [
