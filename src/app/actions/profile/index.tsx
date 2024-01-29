@@ -45,7 +45,7 @@ export const addNewAddressAction = async (formData: FormData) => {
 		phone,
 		details,
 		state,
-		user_id: user?.id,
+		user_id: user?.id!,
 		created_at: new Date(Date.now()).toLocaleString(),
 	})
 
