@@ -13,32 +13,32 @@ export interface Database {
         Row: {
           city: string
           created_at: string
-          details: string | null
+          details: string
           id: number
           name: string
           phone: string
-          state: string | null
-          user_id: string | null
+          state: string
+          user_id: string
         }
         Insert: {
           city: string
           created_at?: string
-          details?: string | null
+          details: string
           id?: number
           name: string
           phone: string
-          state?: string | null
-          user_id?: string | null
+          state: string
+          user_id: string
         }
         Update: {
           city?: string
           created_at?: string
-          details?: string | null
+          details?: string
           id?: number
           name?: string
           phone?: string
-          state?: string | null
-          user_id?: string | null
+          state?: string
+          user_id?: string
         }
         Relationships: [
           {
@@ -70,6 +70,48 @@ export interface Database {
           poster_url?: string | null
         }
         Relationships: []
+      }
+      favorites: {
+        Row: {
+          brand: string
+          created_at: string
+          id: number
+          name: string
+          price: number
+          user_id: string
+        }
+        Insert: {
+          brand: string
+          created_at?: string
+          id?: number
+          name: string
+          price: number
+          user_id: string
+        }
+        Update: {
+          brand?: string
+          created_at?: string
+          id?: number
+          name?: string
+          price?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "favorites_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "favorites_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       products: {
         Row: {
