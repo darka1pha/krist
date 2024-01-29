@@ -3,11 +3,11 @@ import initTranslations from './i18n'
 import Hero from '@/components/hero'
 import CardsSlider from '@/components/cardsSlider'
 import CardsGrid from '@/components/cardsGrid'
-import { ProductCard } from '@/components/elements'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Database } from '@/types/supabase'
 import { cookies } from 'next/headers'
 import { Metadata } from 'next'
+import ProductCard from '@/components/elements/productCard'
 
 const i18nNamespaces = ['home']
 
