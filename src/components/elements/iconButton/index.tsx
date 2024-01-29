@@ -1,5 +1,7 @@
+'use client'
 import { cn } from '@/app/utils'
 import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react'
+import { useFormStatus } from 'react-dom'
 
 const IconButton = (
 	props: DetailedHTMLProps<
@@ -7,16 +9,21 @@ const IconButton = (
 		HTMLButtonElement
 	>
 ) => {
+	const { pending } = useFormStatus()
 	return (
 		<button
 			{...{
 				...props,
 				className: cn(
-					'p-2 rounded-full bg-white active:scale-95',
+					'p-2 rounded-full bg-white active:scale-95 flex justify-center items-center',
 					props.className
 				),
 			}}>
-			{props.children}
+			{pending ? (
+				<span className='loading loading-spinner loading-xs bg-primary-500' />
+			) : (
+				props.children
+			)}
 		</button>
 	)
 }
