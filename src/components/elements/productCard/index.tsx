@@ -1,10 +1,23 @@
 import Image from 'next/image'
 import { IconButton } from '..'
 import { Eye, Star1 } from 'iconsax-react'
-import { Tables } from '@/types/supabase'
+import { Database, Tables } from '@/types/supabase'
 import Link from 'next/link'
+import { favoriteAction } from '@/app/actions/profile'
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
 
-const ProductCard = ({ product }: { product: Tables<'products'> }) => {
+const ProductCard = async ({ product }: { product: Tables<'products'> }) => {
+	const supabase = createServerComponentClient<Database>({ cookies })
+	const { data } = await supabase
+		.from('favorites')
+		.select('liked')
+		.eq('id', product.id)
+		.single()
+	const {
+		data: { user },
+	} = await supabase.auth.getUser()
+
 	return (
 		<div className='group transition-all ease-in-out'>
 			<div className='aspect-w-10 relative aspect-h-14 w-full overflow-hidden rounded-lg bg-gray-200 '>
@@ -16,11 +29,27 @@ const ProductCard = ({ product }: { product: Tables<'products'> }) => {
 				/>
 				<div className='z-10 w-full h-full absolute top-0 flex flex-col opacity-0 group-hover:opacity-100 transition-all ease-in-out items-end'>
 					<div className='flex-1 flex flex-col p-2'>
-						<IconButton className='mb-2 w-fit'>
-							<Star1 size={18} className='text-primary-500' />
-						</IconButton>
+						<form action={favoriteAction}>
+							<input type='hidden' name='id' value={product.id} />
+							<input
+								type='hidden'
+								name='liked'
+								value={data ? String(data.liked) : 'false'}
+							/>
+							{user && (
+								<IconButton className='mb-2 w-[40px] h-[40px]'>
+									<Star1
+										variant={data?.liked ? 'Bold' : 'Outline'}
+										size={18}
+										className={
+											data?.liked ? 'text-yellow-400' : 'text-primary-500'
+										}
+									/>
+								</IconButton>
+							)}
+						</form>
 						<Link href={`/products/${product.id}`}>
-							<IconButton className='w-fit'>
+							<IconButton className='w-[40px] h-[40px]'>
 								<Eye size={18} className='text-primary-500' />
 							</IconButton>
 						</Link>
