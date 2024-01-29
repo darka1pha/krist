@@ -21,7 +21,9 @@ const EditModal = async ({ locale }: { locale: string }) => {
 				<div className='absolute top-0 right-0 h-full w-full bg-primary-500/50 -z-[0]' />
 			</Link>
 			<div className='absolute right-[50%] top-[50%] transform translate-x-[50%] translate-y-[-50%] z-20 bg-white shadow-md rounded-xl p-5'>
-				<form className='grid grid-cols-2 w-full gap-4'>
+				<form
+					action={updateProfileAction}
+					className='grid grid-cols-2 w-full gap-4'>
 					<div className='col-span-1 flex flex-col'>
 						<label className='form_label mb-2' htmlFor='name'>
 							{t('form.name')}
@@ -60,9 +62,7 @@ const EditModal = async ({ locale }: { locale: string }) => {
 							required
 						/>
 					</div>
-					<SubmitButton
-						formAction={updateProfileAction}
-						className='btn-primary w-full col-span-2'>
+					<SubmitButton className='btn-primary w-full col-span-2'>
 						Confirm
 					</SubmitButton>
 				</form>
