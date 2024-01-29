@@ -9,7 +9,6 @@ interface FormOptionProps
 		SelectHTMLAttributes<HTMLSelectElement>,
 		HTMLSelectElement
 	> {
-	baseUrl: string
 	for: string
 }
 

@@ -57,7 +57,6 @@ const AddressModal = async ({
 						<FormSelect
 						defaultValue={selectedState ?? null}
 							for='state'
-							baseUrl='/profile/addresses?modal=true&state='
 							className='select'
 							name='state'>
 							{states.map(({ id, name }) => (
@@ -74,7 +73,6 @@ const AddressModal = async ({
 						<FormSelect
 							defaultValue={selectedCity ?? null}
 							for='city'
-							baseUrl='/profile/addresses?modal=true&state='
 							className='select'
 							name='city'>
 							{cities.map(({ id, name }) => (
