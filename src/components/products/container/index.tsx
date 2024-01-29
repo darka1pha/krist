@@ -1,5 +1,5 @@
 import CardsGrid from '@/components/cardsGrid'
-import { ProductCard } from '@/components/elements'
+import ProductCard from '@/components/elements/productCard'
 import { Tables } from '@/types/supabase'
 
 const Container = ({ products }: { products: Tables<'products'>[] | null }) => {
