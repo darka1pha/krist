@@ -25,7 +25,9 @@ const AddressModal = async ({
 				<div className='absolute top-0 right-0 h-full w-full bg-primary-500/50 -z-[0]' />
 			</Link>
 			<div className='absolute right-[50%] top-[50%] transform translate-x-[50%] translate-y-[-50%] z-20 bg-white shadow-md rounded-xl p-5'>
-				<form className='grid grid-cols-2 w-full gap-4'>
+				<form
+					action={addNewAddressAction}
+					className='grid grid-cols-2 w-full gap-4'>
 					<div className='col-span-1 flex flex-col'>
 						<label className='form_label mb-2' htmlFor='name'>
 							{t('addresses.form.name')}
@@ -55,7 +57,7 @@ const AddressModal = async ({
 							{t('addresses.form.state')}
 						</label>
 						<FormSelect
-						defaultValue={selectedState ?? null}
+							defaultValue={selectedState ?? null}
 							for='state'
 							className='select'
 							name='state'>
@@ -93,7 +95,7 @@ const AddressModal = async ({
 							required
 						/>
 					</div>
-					<SubmitButton formAction={addNewAddressAction} className='btn-primary w-full col-span-2'>
+					<SubmitButton className='btn-primary w-full col-span-2'>
 						Confirm
 					</SubmitButton>
 				</form>
