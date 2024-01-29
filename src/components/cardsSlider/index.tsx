@@ -1,5 +1,5 @@
 'use client'
-import { Swiper as SwiperContainer, SwiperRef, SwiperSlide } from 'swiper/react'
+import { Swiper as SwiperContainer, SwiperSlide } from 'swiper/react'
 import { CategoryCard } from '../elements'
 import { ArrowLeft2, ArrowRight2 } from 'iconsax-react'
 import { useState } from 'react'
