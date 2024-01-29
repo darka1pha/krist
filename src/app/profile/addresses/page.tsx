@@ -32,8 +32,6 @@ const AddressesPage = async ({
 	const supabase = createServerComponentClient<Database>({ cookies })
 	const { data } = await supabase.from('addresses').select('*')
 
-	console.log(data)
-
 	return (
 		<div className='col-span-9'>
 			<AddressesHeader locale={locale} />
