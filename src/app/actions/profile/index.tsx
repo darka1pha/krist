@@ -1,7 +1,9 @@
+'use server'
+
 import { Database } from '@/types/supabase'
 import { createServerActionClient } from '@supabase/auth-helpers-nextjs'
 import { redirect } from 'next/navigation'
-import { cookies } from 'next/headers'
+import { cookies, headers } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 
 export const updateProfileAction = async (formData: FormData) => {
@@ -54,5 +56,37 @@ export const addNewAddressAction = async (formData: FormData) => {
 	} else {
 		revalidatePath('/profile/addresses')
 		redirect('/profile/addresses')
+	}
+}
+
+export const favoriteAction = async (formData: FormData) => {
+	const supabase = createServerActionClient<Database>({ cookies })
+	const {
+		data: { user },
+	} = await supabase.auth.getUser()
+
+	const id = Number(formData.get('id'))
+	const liked = String(formData.get('liked'))
+
+	const headersList = headers()
+	const domain = headersList.get('x-forwarded-host') || ''
+	const protocol = headersList.get('x-forwarded-proto') || ''
+	const fullUrl = headersList.get('referer') || ''
+
+	const toRemove = `${protocol}://${domain}`
+
+	const pathname = fullUrl.replace(toRemove, '')
+
+	const { error } =
+		liked === 'false'
+			? await supabase
+					.from('favorites')
+					.insert({ id, user_id: user?.id!, liked: true })
+			: await supabase.from('favorites').delete().eq('id', id)
+
+	if (error) {
+		throw new Error(error.message, { cause: error.details })
+	} else {
+		revalidatePath(pathname)
 	}
 }
