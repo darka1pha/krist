@@ -35,7 +35,7 @@ const ProductLoading = () => {
 						<h3 className='h-8 w-16 mb-4 bg-gray-300 animate-pulse rounded-xl' />
 						<div className='flex flex-wrap'>
 							{Array.from(new Array(4)).map((i) => (
-								<div className='h-10 w-10 rounded-lg m-2 bg-gray-300 animate-pulse ' />
+								<div key={i} className='h-10 w-10 rounded-lg m-2 bg-gray-300 animate-pulse ' />
 							))}
 						</div>
 					</div>
@@ -43,7 +43,7 @@ const ProductLoading = () => {
 						<h3 className='h-8 w-16 mb-4 bg-gray-300 animate-pulse rounded-xl' />
 						<div className='flex flex-wrap'>
 							{Array.from(new Array(2)).map((i) => (
-								<div className='h-10 w-10 rounded-lg mx-2 bg-gray-300 animate-pulse ' />
+								<div key={i} className='h-10 w-10 rounded-lg mx-2 bg-gray-300 animate-pulse ' />
 							))}
 						</div>
 					</div>

@@ -10,6 +10,7 @@ const ColorPicker = ({ colors }: { colors: string[] | undefined }) => {
 			<div className='flex flex-wrap'>
 				{colors?.map((color, key) => (
 					<ColorItem
+						key={key}
 						color={color}
 						selected={
 							searchParams.get('color')

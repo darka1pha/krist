@@ -12,6 +12,7 @@ const SizePicker = ({ sizes }: { sizes: SizesType | undefined }) => {
 			<div className='flex flex-wrap'>
 				{sizes?.map((size, key) => (
 					<SizeItem
+						key={key}
 						size={size}
 						selected={
 							searchParams.get('size')
