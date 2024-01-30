@@ -1,6 +1,6 @@
 'use client'
 
-import { Swiper, SwiperSlide, SwiperRef } from 'swiper/react'
+import { Swiper, SwiperSlide } from 'swiper/react'
 
 // Import Swiper styles
 import 'swiper/css'
@@ -9,7 +9,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/thumbs'
 
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { Swiper as SwiperType } from 'swiper'
 import Thumbnail from './thumbnail'
 import GallerySlide from './gallerySlide'
