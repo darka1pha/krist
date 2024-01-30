@@ -2,7 +2,11 @@
 import { ButtonHTMLAttributes } from 'react'
 import { useFormStatus } from 'react-dom'
 
-const SubmitButton = (props: ButtonHTMLAttributes<HTMLButtonElement>) => {
+interface SubmitButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+	variant?: 'primary' | 'secondary'
+}
+
+const SubmitButton = (props: SubmitButtonProps) => {
 	const { pending } = useFormStatus()
 
 	return (
@@ -13,7 +17,15 @@ const SubmitButton = (props: ButtonHTMLAttributes<HTMLButtonElement>) => {
 			type='submit'
 			{...props}>
 			{pending ? (
-				<span className='loading h-full loading-dots loading-sm bg-red-50' />
+				<span
+					className={`loading h-full loading-dots loading-sm ${
+						props.variant
+							? props.variant === 'secondary'
+								? 'bg-primary-500'
+								: 'bg-red-50'
+							: 'bg-red-50'
+					}`}
+				/>
 			) : (
 				props.children
 			)}
