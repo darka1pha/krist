@@ -3,8 +3,9 @@
 import { Database } from '@/types/supabase'
 import { createServerActionClient } from '@supabase/auth-helpers-nextjs'
 import { redirect } from 'next/navigation'
-import { cookies, headers } from 'next/headers'
+import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
+import { getCurrentPathname } from '@/app/utils'
 
 export const updateProfileAction = async (formData: FormData) => {
 	'use server'
@@ -68,15 +69,6 @@ export const favoriteAction = async (formData: FormData) => {
 	const id = Number(formData.get('id'))
 	const liked = String(formData.get('liked'))
 
-	const headersList = headers()
-	const domain = headersList.get('x-forwarded-host') || ''
-	const protocol = headersList.get('x-forwarded-proto') || ''
-	const fullUrl = headersList.get('referer') || ''
-
-	const toRemove = `${protocol}://${domain}`
-
-	const pathname = fullUrl.replace(toRemove, '')
-
 	const { error } =
 		liked === 'false'
 			? await supabase
@@ -87,6 +79,6 @@ export const favoriteAction = async (formData: FormData) => {
 	if (error) {
 		throw new Error(error.message, { cause: error.details })
 	} else {
-		revalidatePath(pathname)
+		revalidatePath(getCurrentPathname())
 	}
 }
