@@ -50,6 +50,55 @@ export interface Database {
           }
         ]
       }
+      cart_items: {
+        Row: {
+          cart_id: number | null
+          created_at: string
+          id: number
+          product_id: number
+          qty: number
+          user_id: string
+        }
+        Insert: {
+          cart_id?: number | null
+          created_at?: string
+          id?: number
+          product_id: number
+          qty: number
+          user_id: string
+        }
+        Update: {
+          cart_id?: number | null
+          created_at?: string
+          id?: number
+          product_id?: number
+          qty?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cart_items_cart_id_fkey"
+            columns: ["cart_id"]
+            isOneToOne: false
+            referencedRelation: "shopping_cart"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cart_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cart_items_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       categories: {
         Row: {
           created_at: string
@@ -189,6 +238,35 @@ export interface Database {
           }
         ]
       }
+      shopping_cart: {
+        Row: {
+          created_at: string
+          id: number
+          item_count: number | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          item_count?: number | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          item_count?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shopping_cart_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       subcategories: {
         Row: {
           category: number
@@ -226,6 +304,14 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
+      check_cart_item_exists: {
+        Args: {
+          p_product_id: number
+          p_user_id: string
+          p_cart_id: number
+        }
+        Returns: boolean
+      }
       delete_avatar: {
         Args: {
           avatar_url: string
@@ -238,6 +324,20 @@ export interface Database {
           object: string
         }
         Returns: Record<string, unknown>
+      }
+      insert_cart_item: {
+        Args: {
+          p_product_id: number
+          p_user_id: string
+          p_qty: number
+        }
+        Returns: undefined
+      }
+      update_shopping_cart_item_count: {
+        Args: {
+          p_user_id: string
+        }
+        Returns: undefined
       }
     }
     Enums: {
