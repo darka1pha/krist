@@ -1,11 +1,12 @@
 import Image from 'next/image'
-import { IconButton } from '..'
+import { IconButton, SubmitButton } from '..'
 import { Eye, Star1 } from 'iconsax-react'
 import { Database, Tables } from '@/types/supabase'
 import Link from 'next/link'
 import { favoriteAction } from '@/app/actions/profile'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
+import { addToCartAction } from '@/app/actions/cart'
 
 const ProductCard = async ({ product }: { product: Tables<'products'> }) => {
 	const supabase = createServerComponentClient<Database>({ cookies })
@@ -55,7 +56,14 @@ const ProductCard = async ({ product }: { product: Tables<'products'> }) => {
 						</Link>
 					</div>
 					<div className='flex-1 w-full justify-center items-end flex p-2 md:p-4'>
-						<button className='btn-secondary w-full'>Add To Cart</button>
+						<form className='w-full' action={addToCartAction}>
+							<input type='hidden' name='id' value={product.id} />
+							<SubmitButton
+								variant='secondary'
+								className='btn-secondary w-full'>
+								Add To Cart
+							</SubmitButton>
+						</form>
 					</div>
 				</div>
 			</div>
