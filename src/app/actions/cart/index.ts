@@ -7,7 +7,7 @@ import { cookies } from 'next/headers'
 
 export const addToCartAction = async (formData: FormData) => {
 	const productId = Number(formData.get('id'))
-	const qty = Number(formData.get('qty'))
+	const qty = Number(formData.get('qty') ?? 1)
 
 	const supabase = createServerActionClient<Database>({ cookies })
 	const {
@@ -62,6 +62,47 @@ export const addToCartAction = async (formData: FormData) => {
 				cause: insertItemError.details,
 			})
 	}
+
+	revalidatePath(getCurrentPathname())
+}
+
+export const updateQtyAction = async (formData: FormData) => {
+	const cartItemId = Number(formData.get('id'))
+	const qty = Number(formData.get('qty'))
+
+	console.log({ cartItemId, qty })
+
+	const supabase = createServerActionClient<Database>({ cookies })
+
+	const { error: updateItemError } = await supabase
+		.from('cart_items')
+		.update({
+			qty: qty,
+		})
+		.eq('id', cartItemId)
+
+	if (updateItemError)
+		throw new Error(updateItemError.message, {
+			cause: updateItemError.details,
+		})
+
+	revalidatePath(getCurrentPathname())
+}
+
+export const deleteCartItemAction = async (formData: FormData) => {
+	const cartItemId = Number(formData.get('id'))
+
+	const supabase = createServerActionClient<Database>({ cookies })
+
+	const { error: deleteItemError } = await supabase
+		.from('cart_items')
+		.delete()
+		.eq('id', cartItemId)
+
+	if (deleteItemError)
+		throw new Error(deleteItemError.message, {
+			cause: deleteItemError.details,
+		})
 
 	revalidatePath(getCurrentPathname())
 }
