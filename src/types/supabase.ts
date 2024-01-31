@@ -243,18 +243,21 @@ export interface Database {
           created_at: string
           id: number
           item_count: number | null
+          total_price: number | null
           user_id: string
         }
         Insert: {
           created_at?: string
           id?: number
           item_count?: number | null
+          total_price?: number | null
           user_id: string
         }
         Update: {
           created_at?: string
           id?: number
           item_count?: number | null
+          total_price?: number | null
           user_id?: string
         }
         Relationships: [
@@ -334,6 +337,18 @@ export interface Database {
         Returns: undefined
       }
       update_shopping_cart_item_count: {
+        Args: {
+          p_user_id: string
+        }
+        Returns: undefined
+      }
+      update_shopping_cart_properties: {
+        Args: {
+          p_user_id: string
+        }
+        Returns: undefined
+      }
+      update_shopping_cart_total_price: {
         Args: {
           p_user_id: string
         }
