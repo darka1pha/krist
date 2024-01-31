@@ -1,5 +1,5 @@
 import { ArrowRight } from 'iconsax-react'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 
 const Hero = () => {
 	return (
@@ -10,7 +10,8 @@ const Hero = () => {
 						className='object-cover h-full w-full'
 						src='/images/hero.webp'
 						alt='hero image'
-						layout='fill'
+						fill
+						sizes='100vw'
 					/>
 				</div>
 				<div className='md:px-10 dark:text-primary-500 w-full md:w-auto px-4'>

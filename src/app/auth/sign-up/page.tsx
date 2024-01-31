@@ -3,7 +3,7 @@ import initTranslations from '@/app/i18n'
 import Message from '@/components/message'
 import { SubmitButton } from '@/components/elements'
 import TranslationsProvider from '@/components/translation/translationsProvider'
-import Image from "next/legacy/image"
+import Image from "next/image"
 import Link from 'next/link'
 
 const i18nNamespaces = ['auth']
@@ -15,21 +15,24 @@ const SignUp = async ({
 }) => {
 	const { t, resources } = await initTranslations(locale, i18nNamespaces)
 	return (
-		<TranslationsProvider
+        <TranslationsProvider
 			namespaces={i18nNamespaces}
 			locale={locale}
 			resources={resources}>
 			<div className='w-full md:h-[100vh] flex flex-col md:flex-row overflow-hidden'>
 				<div className='bg-[url("/images/signup.webp")] bg-fixed bg-top bg-cover md:bg-none h-[360px] md:h-full w-full md:w-[50%] overflow-hidden bg-red-50'>
 					<Image
-						src='/images/signup.webp'
-						className='h-full w-full object-cover object-top hidden md:block'
-						alt='signup image'
-						objectFit='cover'
-						quality={100}
-						height={640}
-						width={640}
-					/>
+                        src='/images/signup.webp'
+                        className='h-full w-full object-cover object-top hidden md:block'
+                        alt='signup image'
+                        quality={100}
+                        height={640}
+                        width={640}
+                        style={{
+                            maxWidth: "100%",
+                            height: "auto",
+                            objectFit: "cover"
+                        }} />
 				</div>
 				<div className='  py-10 md:py-0 h-full w-full md:w-[50%] flex flex-col justify-center items-center px-4'>
 					<form
@@ -94,7 +97,7 @@ const SignUp = async ({
 				</div>
 			</div>
 		</TranslationsProvider>
-	)
+    );
 }
 
 export default SignUp

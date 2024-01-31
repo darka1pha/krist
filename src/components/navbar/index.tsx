@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import Image from "next/legacy/image"
+import Image from "next/image"
 import initTranslations from '@/app/i18n'
 import AuthButton from './authButton'
 import CartIcon from '../elements/cartIcon'
@@ -16,15 +16,18 @@ const Navbar = async ({ locale }: { locale: string }) => {
 		data: { user },
 	} = await supabase.auth.getUser()
 	return (
-		<nav className='flex w-full h-20 justify-between items-center px-4'>
+        <nav className='flex w-full h-20 justify-between items-center px-4'>
 			<div className='flex-1'>
 				<Link href={'/'}>
 					<Image
-						src='/images/logo.svg'
-						height={48}
-						width={100}
-						alt='krist logo'
-					/>
+                        src='/images/logo.svg'
+                        height={48}
+                        width={100}
+                        alt='krist logo'
+                        style={{
+                            maxWidth: "100%",
+                            height: "auto"
+                        }} />
 				</Link>
 			</div>
 			<ul className='flex justify-center items-center flex-1'>
@@ -49,7 +52,7 @@ const Navbar = async ({ locale }: { locale: string }) => {
 				<AuthButton user={user} locale={locale} />
 			</div>
 		</nav>
-	)
+    );
 }
 
 export default Navbar

@@ -1,5 +1,5 @@
 import { signInAction } from '@/app/actions/auth/sign-in'
-import Image from "next/legacy/image"
+import Image from "next/image"
 import Link from 'next/link'
 import initTranslations from '@/app/i18n'
 import { SubmitButton } from '@/components/elements'
@@ -13,17 +13,20 @@ const SignIn = async ({
 	const { t } = await initTranslations(locale, i18nNamespaces)
 
 	return (
-		<div className='w-full md:h-[100vh] flex flex-col  md:flex-row'>
+        <div className='w-full md:h-[100vh] flex flex-col  md:flex-row'>
 			<div className='bg-[url("/images/signin.webp")] bg-fixed bg-top bg-cover md:bg-none h-[360px] md:h-full w-full md:w-[50%] overflow-hidden bg-red-50'>
 				<Image
-					src='/images/signin.webp'
-					className='h-full w-full object-cover object-top hidden md:block'
-					alt='signin image'
-					objectFit='cover'
-					quality={100}
-					height={640}
-					width={640}
-				/>
+                    src='/images/signin.webp'
+                    className='h-full w-full object-cover object-top hidden md:block'
+                    alt='signin image'
+                    quality={100}
+                    height={640}
+                    width={640}
+                    style={{
+                        maxWidth: "100%",
+                        height: "auto",
+                        objectFit: "cover"
+                    }} />
 			</div>
 			<div className='  py-10 md:py-0 h-full w-full md:w-[50%] flex flex-col justify-center items-center px-4'>
 				<form
@@ -66,7 +69,7 @@ const SignIn = async ({
 				</form>
 			</div>
 		</div>
-	)
+    );
 }
 
 export default SignIn
