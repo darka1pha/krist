@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from "next/legacy/image"
 import { IconButton, SubmitButton } from '..'
 import { Eye, Star1 } from 'iconsax-react'
 import { Database, Tables } from '@/types/supabase'

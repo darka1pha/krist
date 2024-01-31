@@ -3,7 +3,7 @@ import initTranslations from '@/app/i18n'
 import Message from '@/components/message'
 import { SubmitButton } from '@/components/elements'
 import TranslationsProvider from '@/components/translation/translationsProvider'
-import Image from 'next/image'
+import Image from "next/legacy/image"
 import Link from 'next/link'
 
 const i18nNamespaces = ['auth']

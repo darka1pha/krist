@@ -1,5 +1,5 @@
 import { signInAction } from '@/app/actions/auth/sign-in'
-import Image from 'next/image'
+import Image from "next/legacy/image"
 import Link from 'next/link'
 import initTranslations from '@/app/i18n'
 import { SubmitButton } from '@/components/elements'
