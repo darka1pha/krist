@@ -13,9 +13,11 @@ const CartIcon = async () => {
 	return (
 		<div className='relative'>
 			<Link href={'/cart'}>
-				<div className='absolute rounded-full bg-oceanBlue text-white h-5 w-5 text-xs flex items-center justify-center -right-2 -top-2'>
-					{data?.item_count}
-				</div>
+				{data && data.item_count && data.item_count > 0 && (
+					<div className='absolute rounded-full bg-oceanBlue text-white h-5 w-5 text-xs flex items-center justify-center -right-2 -top-2'>
+						{data?.item_count}
+					</div>
+				)}
 				<ShoppingCart size={32} />
 			</Link>
 		</div>
