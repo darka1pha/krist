@@ -1,3 +1,4 @@
+'use server'
 import { getCurrentPathname } from '@/app/utils'
 import { Database } from '@/types/supabase'
 import { createServerActionClient } from '@supabase/auth-helpers-nextjs'
@@ -5,8 +6,9 @@ import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 
 export const addToCartAction = async (formData: FormData) => {
-	'use server'
 	const productId = Number(formData.get('id'))
+	const qty = Number(formData.get('qty'))
+
 	const supabase = createServerActionClient<Database>({ cookies })
 	const {
 		data: { user },
@@ -33,7 +35,7 @@ export const addToCartAction = async (formData: FormData) => {
 				product_id: productId,
 				cart_id: data?.id!,
 				user_id: user?.id!,
-				qty: 1,
+				qty: qty ?? 1,
 				created_at: new Date(Date.now()).toLocaleDateString(),
 			})
 
@@ -52,7 +54,7 @@ export const addToCartAction = async (formData: FormData) => {
 				product_id: productId,
 				cart_id: data?.id!,
 				user_id: user?.id!,
-				qty: 1,
+				qty: qty ?? 1,
 				created_at: new Date(Date.now()).toLocaleDateString(),
 			})
 		if (insertItemError)

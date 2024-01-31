@@ -8,6 +8,7 @@ export const generateMetadata = async ({
 	params: { id },
 }: {
 	params: { id: number }
+	searchParams: { qty: number }
 }) => {
 	const supabase = createServerComponentClient<Database>({ cookies })
 	const { data: product } = await supabase
