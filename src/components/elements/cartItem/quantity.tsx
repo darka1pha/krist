@@ -4,7 +4,7 @@ import { IconButton, SubmitButton } from '..'
 
 const Quantity = ({ qty, id }: { qty: number; id: number }) => {
 	return (
-		<div className='p-4 border-primary-500 border-2 col-span-3  sm:col-span-2 flex rounded-xl justify-between items-center'>
+		<div className='p-2 border-primary-500 border-2 col-span-3  sm:col-span-2 flex rounded-xl justify-between items-center'>
 			<form action={updateQtyAction}>
 				<input type='hidden' name='qty' value={qty - 1} />
 				<input type='hidden' name='id' value={id} />
