@@ -1,6 +1,6 @@
-import { updateQtyAction } from '@/app/actions/cart'
 import { Add, Minus } from 'iconsax-react'
-import { IconButton, SubmitButton } from '..'
+import { IconButton } from '..'
+import { updateQtyAction } from '@/actions/cart'
 
 const Quantity = ({ qty, id }: { qty: number; id: number }) => {
 	return (
