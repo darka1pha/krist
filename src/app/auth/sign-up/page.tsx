@@ -1,4 +1,4 @@
-import { signUpAction } from '@/app/actions/auth/sign-up'
+import { signUpAction } from '@/actions/auth/sign-up'
 import initTranslations from '@/app/i18n'
 import Message from '@/components/message'
 import { SubmitButton } from '@/components/elements'

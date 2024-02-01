@@ -5,7 +5,7 @@ import { createServerActionClient } from '@supabase/auth-helpers-nextjs'
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
-import { getCurrentPathname } from '@/app/utils'
+import { getCurrentPathname } from '@/utils'
 
 export const updateProfileAction = async (formData: FormData) => {
 	'use server'

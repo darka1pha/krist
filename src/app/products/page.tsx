@@ -1,4 +1,4 @@
-import { getCategories, getProducts } from '@/app/actions/pdoducts'
+import { getCategories, getProducts } from '@/actions/pdoducts'
 import { Container, Filter } from '@/components/products'
 import { CategoriesProps } from '@/types'
 import { PostgrestError } from '@supabase/supabase-js'

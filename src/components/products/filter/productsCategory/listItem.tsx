@@ -1,5 +1,5 @@
 'use client'
-import { addSearchParams, cn } from '@/app/utils'
+import { addSearchParams, cn } from '@/utils'
 import { CategoriesProps } from '@/types'
 import { Collapse, List, ListItemButton } from '@mui/material'
 import { ArrowDown2, ArrowUp2 } from 'iconsax-react'

@@ -1,5 +1,5 @@
 'use client'
-import { cn } from '@/app/utils'
+import { cn } from '@/utils'
 import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react'
 import { useFormStatus } from 'react-dom'
 

@@ -1,4 +1,4 @@
-import { updateProfileAction } from '@/app/actions/profile'
+import { updateProfileAction } from '@/actions/profile'
 import initTranslations from '@/app/i18n'
 import { SubmitButton } from '@/components/elements'
 import { Database } from '@/types/supabase'

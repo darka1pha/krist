@@ -1,5 +1,5 @@
 'use client'
-import { cn, addSearchParams } from '@/app/utils'
+import { cn, addSearchParams } from '@/utils'
 import { useRouter } from 'next/navigation'
 
 const SizeItem = ({ size, selected }: { size: string; selected: boolean }) => {

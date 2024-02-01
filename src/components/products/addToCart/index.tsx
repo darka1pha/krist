@@ -2,7 +2,7 @@
 import { Heart } from 'iconsax-react'
 import Quantity from './quantity'
 import { useParams, useSearchParams } from 'next/navigation'
-import { addToCartAction } from '@/app/actions/cart'
+import { addToCartAction } from '@/actions/cart'
 import { SubmitButton } from '@/components/elements'
 
 type SaerchParamsType = {

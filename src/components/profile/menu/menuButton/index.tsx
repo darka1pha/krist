@@ -1,5 +1,5 @@
 'use client'
-import { cn } from '@/app/utils'
+import { cn } from '@/utils'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'

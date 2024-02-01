@@ -1,8 +1,9 @@
-import { signInAction } from '@/app/actions/auth/sign-in'
+
 import Image from "next/image"
 import Link from 'next/link'
 import initTranslations from '@/app/i18n'
 import { SubmitButton } from '@/components/elements'
+import { signInAction } from "@/actions/auth/sign-in"
 const i18nNamespaces = ['auth']
 
 const SignIn = async ({

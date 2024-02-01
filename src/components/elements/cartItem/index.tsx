@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Quantity from './quantity'
 import { Trash } from 'iconsax-react'
 import { IconButton } from '..'
-import { deleteCartItemAction } from '@/app/actions/cart'
+import { deleteCartItemAction } from '@/actions/cart'
 
 type CartItemProps = {
 	name: string

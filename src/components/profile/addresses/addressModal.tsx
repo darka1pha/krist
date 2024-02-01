@@ -3,7 +3,7 @@ import { SubmitButton } from '@/components/elements'
 import { CityProps, StateProps } from '@/types'
 import Link from 'next/link'
 import FormSelect from './formSelect'
-import { addNewAddressAction } from '@/app/actions/profile'
+import { addNewAddressAction } from '@/actions/profile'
 
 const AddressModal = async ({
 	locale,

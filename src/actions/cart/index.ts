@@ -1,5 +1,5 @@
 'use server'
-import { getCurrentPathname } from '@/app/utils'
+import { getCurrentPathname } from '@/utils'
 import { Database } from '@/types/supabase'
 import { createServerActionClient } from '@supabase/auth-helpers-nextjs'
 import { revalidatePath } from 'next/cache'

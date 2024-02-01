@@ -1,5 +1,5 @@
 'use client'
-import { addSearchParams } from '@/app/utils'
+import { addSearchParams } from '@/utils'
 import { Add, Minus } from 'iconsax-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 

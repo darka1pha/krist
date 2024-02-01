@@ -1,6 +1,6 @@
 'use client'
 
-import { addSearchParams, cn } from '@/app/utils'
+import { addSearchParams, cn } from '@/utils'
 import { useRouter } from 'next/navigation'
 import { DetailedHTMLProps, SelectHTMLAttributes } from 'react'
 

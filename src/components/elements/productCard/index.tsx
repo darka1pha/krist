@@ -3,10 +3,10 @@ import { IconButton, SubmitButton } from '..'
 import { Eye, Star1 } from 'iconsax-react'
 import { Database, Tables } from '@/types/supabase'
 import Link from 'next/link'
-import { favoriteAction } from '@/app/actions/profile'
+import { favoriteAction } from '@/actions/profile'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
-import { addToCartAction } from '@/app/actions/cart'
+import { addToCartAction } from '@/actions/cart'
 
 const ProductCard = async ({ product }: { product: Tables<'products'> }) => {
 	const supabase = createServerComponentClient<Database>({ cookies })
