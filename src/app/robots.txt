@@ -1,0 +1,6 @@
+User-Agent: *
+Allow: /
+Disallow: /profile/
+Disallow: /cart/
+
+Sitemap: https://krist.vercel.app/sitemap.xml
