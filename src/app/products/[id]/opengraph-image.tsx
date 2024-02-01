@@ -1,6 +1,7 @@
 import { Database } from '@/types/supabase'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
+import Image from 'next/image'
 import { ImageResponse } from 'next/og'
 
 // Route segment config
@@ -16,10 +17,10 @@ export const size = {
 export const contentType = 'image/png'
 
 // Image generation
-export default async function Image({
-	props: { id },
+export default async function og({
+	params: { id },
 }: {
-	props: { id: number }
+	params: { id: number }
 }) {
 	const supabase = createServerComponentClient<Database>({ cookies })
 	const { data: product } = await supabase
@@ -33,19 +34,28 @@ export default async function Image({
 			// ImageResponse JSX element
 			<div
 				style={{
-					fontSize: 128,
+					fontSize: 32,
 					background: 'white',
 					width: '100%',
-					height: '100%',
+					height: '100vh',
 					display: 'flex',
 					alignItems: 'center',
 					justifyContent: 'center',
+					borderRadius: '20px',
+					overflow: 'hidden',
+					backgroundImage: `url(${product?.images[0]})`,
+					backgroundRepeat: 'no-repeat',
+					backgroundPosition: 'center',
 				}}>
-				<img
-					src={product?.images[0]}
-					alt='image poster'
-					className='w-full h-full object-cover'
-				/>
+				<p
+					style={{
+						backgroundColor: '#ffffff50',
+						padding: 20,
+						borderRadius: 20,
+						fontWeight: 'bold',
+					}}>
+					{product?.name}
+				</p>
 			</div>
 		),
 		{
