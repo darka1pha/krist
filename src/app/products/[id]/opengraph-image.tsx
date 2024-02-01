@@ -21,11 +21,6 @@ export default async function Image({
 }: {
 	props: { id: number }
 }) {
-	// Font
-	const interSemiBold = fetch(
-		new URL('./Inter-SemiBold.ttf', import.meta.url)
-	).then((res) => res.arrayBuffer())
-
 	const supabase = createServerComponentClient<Database>({ cookies })
 	const { data: product } = await supabase
 		.from('products')
@@ -55,14 +50,6 @@ export default async function Image({
 		),
 		{
 			...size,
-			fonts: [
-				{
-					name: 'Inter',
-					data: await interSemiBold,
-					style: 'normal',
-					weight: 400,
-				},
-			],
 		}
 	)
 }
