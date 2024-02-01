@@ -17,6 +17,7 @@ const MenuButton = ({
 	return (
 		<Link href={url}>
 			<button
+				name='menu button'
 				className={cn(
 					'p-4 w-full text-left flex relative rounded-xl overflow-hidden',
 					url === pathname ? 'text-white' : ''

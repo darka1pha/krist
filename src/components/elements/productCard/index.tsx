@@ -1,6 +1,6 @@
-import Image from "next/image"
+import Image from 'next/image'
 import { IconButton, SubmitButton } from '..'
-import { Eye, Star1 } from 'iconsax-react'
+import { Eye, Heart, Star1 } from 'iconsax-react'
 import { Database, Tables } from '@/types/supabase'
 import Link from 'next/link'
 import { favoriteAction } from '@/actions/profile'
@@ -20,16 +20,17 @@ const ProductCard = async ({ product }: { product: Tables<'products'> }) => {
 	} = await supabase.auth.getUser()
 
 	return (
-        <div className='group transition-all ease-in-out'>
+		<div className='group transition-all ease-in-out'>
 			<div className='aspect-w-10 relative aspect-h-14 w-full overflow-hidden rounded-lg bg-gray-200 '>
 				<Image
-                    alt='image'
-                    src={product.images[0]}
-                    fill
-                    sizes="100vw"
-                    style={{
-                        objectFit: "cover"
-                    }} />
+					alt='image'
+					src={product.images[0]}
+					fill
+					sizes='100vw'
+					style={{
+						objectFit: 'cover',
+					}}
+				/>
 				<div className='z-10 w-full h-full absolute top-0 flex flex-col opacity-0 group-hover:opacity-100 transition-all ease-in-out items-end'>
 					<div className='flex-1 flex flex-col p-2'>
 						<form action={favoriteAction}>
@@ -41,11 +42,11 @@ const ProductCard = async ({ product }: { product: Tables<'products'> }) => {
 							/>
 							{user && (
 								<IconButton className='mb-2 w-[40px] h-[40px]'>
-									<Star1
+									<Heart
 										variant={data?.liked ? 'Bold' : 'Outline'}
 										size={18}
 										className={
-											data?.liked ? 'text-yellow-400' : 'text-primary-500'
+											data?.liked ? 'text-red-600' : 'text-primary-500'
 										}
 									/>
 								</IconButton>
@@ -57,16 +58,18 @@ const ProductCard = async ({ product }: { product: Tables<'products'> }) => {
 							</IconButton>
 						</Link>
 					</div>
-					<div className='flex-1 w-full justify-center items-end flex p-2 md:p-4'>
-						<form className='w-full' action={addToCartAction}>
-							<input type='hidden' name='id' value={product.id} />
-							<SubmitButton
-								variant='secondary'
-								className='btn-secondary w-full'>
-								Add To Cart
-							</SubmitButton>
-						</form>
-					</div>
+					{user && (
+						<div className='flex-1 w-full justify-center items-end flex p-2 md:p-4'>
+							<form className='w-full' action={addToCartAction}>
+								<input type='hidden' name='id' value={product.id} />
+								<SubmitButton
+									variant='secondary'
+									className='btn-secondary w-full'>
+									Add To Cart
+								</SubmitButton>
+							</form>
+						</div>
+					)}
 				</div>
 			</div>
 			<div className='pl-2 mt-1'>
@@ -75,7 +78,7 @@ const ProductCard = async ({ product }: { product: Tables<'products'> }) => {
 				<p>${product.price?.toFixed(2)}</p>
 			</div>
 		</div>
-    );
+	)
 }
 
 export default ProductCard

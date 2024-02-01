@@ -11,7 +11,7 @@ const ListItem = ({ category }: { category: CategoriesProps }) => {
 	const [open, setOpen] = useState(
 		params.get('category') === category.name ? true : false
 	)
-	
+
 	const router = useRouter()
 	function capitalizeFirstLetter(string: string) {
 		return string.charAt(0).toUpperCase() + string.slice(1)
@@ -48,6 +48,7 @@ const ListItem = ({ category }: { category: CategoriesProps }) => {
 			<ListItemButton onClick={handleClick}>
 				<div className='w-full flex justify-between items-center'>
 					<button
+						name='category'
 						className='p-2 hover:bg-primary-500 hover:text-white transition-all ease-in-out rounded-xl'
 						onClick={(e) => {
 							e.stopPropagation()
@@ -65,11 +66,12 @@ const ListItem = ({ category }: { category: CategoriesProps }) => {
 				{open ? <ArrowUp2 /> : <ArrowDown2 />}
 			</ListItemButton>
 			<Collapse in={open} timeout='auto' unmountOnExit>
-				{category.subcategories.map(({ name },key) => (
+				{category.subcategories.map(({ name }, key) => (
 					<List key={key} component='div' disablePadding>
 						<ListItemButton sx={{ pl: 4 }}>
 							<div className='w-full flex justify-between items-center'>
 								<button
+									name='subcategory'
 									className='p-2 h-full w-full text-left'
 									onClick={() => {
 										updateSubcategoryFilterParam(category.name, name || '')

@@ -10,7 +10,7 @@ const AddressesHeader = async ({ locale }: { locale: string }) => {
 			<h1 className='text-2xl font-bold'>{t('addresses.title')}</h1>
 			<Link href={'/profile/addresses?modal=true'}>
 				{/* <Tooltip title='Add new Address'> */}
-				<button className='btn-primary'>
+				<button name='new address' className='btn-primary'>
 					<Add size={18} />
 				</button>
 				{/* </Tooltip> */}

@@ -21,6 +21,7 @@ const Quantity = () => {
 	return (
 		<div className='p-4 border-primary-500 border-2 col-span-3  sm:col-span-2 flex rounded-xl justify-between items-center'>
 			<button
+				name='decreace qty'
 				onClick={onMinusQty}
 				disabled={
 					params.has('qty')
@@ -33,7 +34,7 @@ const Quantity = () => {
 				<Minus className='text-primary-500' size={18} />
 			</button>
 			<p className='mx-2'>{!params.has('qty') ? 1 : params.get('qty')}</p>
-			<button onClick={onAddQty}>
+			<button name='increace qty' onClick={onAddQty}>
 				<Add className='text-primary-500' size={18} />
 			</button>
 		</div>

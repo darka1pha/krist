@@ -23,7 +23,9 @@ const AuthButton = async ({
 		<div className='flex justify-end items-center'>
 			{!user ? (
 				<Link href={'/auth/sign-in'}>
-					<button className='btn-primary ml-2 w-24'>{t('signin')}</button>
+					<button name='sign in' className='btn-primary ml-2 w-24'>
+						{t('signin')}
+					</button>
 				</Link>
 			) : (
 				<AccountMenu user={user} />

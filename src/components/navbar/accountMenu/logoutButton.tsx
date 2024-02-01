@@ -1,12 +1,13 @@
 'use client'
-import { ButtonHTMLAttributes } from "react"
-import { useFormStatus } from "react-dom"
+import { ButtonHTMLAttributes } from 'react'
+import { useFormStatus } from 'react-dom'
 
 const LogoutButton = (props: ButtonHTMLAttributes<HTMLButtonElement>) => {
 	const { pending } = useFormStatus()
 
 	return (
 		<button
+			name='logout'
 			className='flex justify-center items-center'
 			disabled={pending}
 			aria-disabled={pending}

@@ -39,12 +39,14 @@ const CardsSlider = ({
 				<h2 className='text-2xl md:text-3xl font-bold'>Shop By Category</h2>
 				<div className='mt-6 md:mt-0'>
 					<button
+						name='prev slide'
 						disabled={!allowLeft}
 						onClick={onPrevSlide}
 						className='btn-primary mx-2'>
 						<ArrowLeft2 size={18} />
 					</button>
 					<button
+						name='next slide'
 						disabled={!allowRight}
 						onClick={onNextSlide}
 						className='btn-primary mx-2'>

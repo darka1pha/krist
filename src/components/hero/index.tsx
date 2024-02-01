@@ -1,5 +1,6 @@
 import { ArrowRight } from 'iconsax-react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const Hero = () => {
 	return (
@@ -20,10 +21,14 @@ const Hero = () => {
 						Woman's Collecttion
 					</p>
 					<p className='text-lg md:text-xl'>UPTO 40% OFF</p>
-					<button className='btn-primary flex items-center mt-4'>
-						<p className='mr-2 text-sm'>Shop Now</p>
-						<ArrowRight size={20} />
-					</button>
+					<Link href={'/products'}>
+						<button
+							name='products'
+							className='btn-primary flex items-center mt-4'>
+							<p className='mr-2 text-sm'>Shop Now</p>
+							<ArrowRight size={20} />
+						</button>
+					</Link>
 				</div>
 			</div>
 		</div>
