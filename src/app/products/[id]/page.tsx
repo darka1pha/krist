@@ -20,6 +20,7 @@ export const generateMetadata = async ({
 	const metadata: Metadata = {
 		title: product?.name,
 		description: product?.description,
+		metadataBase: new URL("https://krist.vercel.app/"),
 		openGraph: {
 			title: product?.name,
 			description: product?.description,
