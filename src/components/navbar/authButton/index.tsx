@@ -1,30 +1,35 @@
+'use client'
 import initTranslations from '@/app/i18n'
-import { Database } from '@/types/supabase'
-import {
-	User,
-	createServerComponentClient,
-} from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { User } from '@supabase/auth-helpers-nextjs'
 import Link from 'next/link'
 import AccountMenu from '../accountMenu'
+import { useTranslation } from 'react-i18next'
+import { usePathname } from 'next/navigation'
 
 const i18nNamespaces = ['navbar']
 
-const AuthButton = async ({
+const AuthButton = ({
 	locale,
 	user,
 }: {
 	locale: string
 	user: User | null
 }) => {
-	const { t } = await initTranslations(locale, i18nNamespaces)
+	const pathname = usePathname()
 
 	return (
 		<div className='flex justify-end items-center'>
 			{!user ? (
-				<Link href={'/auth/sign-in'}>
+				<Link
+					href={{
+						pathname: '/auth/sign-in',
+						search:
+							pathname !== '/' && !pathname.includes('/auth')
+								? `redirect=${pathname}`
+								: '',
+					}}>
 					<button name='sign in' className='btn-primary ml-2 w-24'>
-						{t('signin')}
+						Sign In
 					</button>
 				</Link>
 			) : (

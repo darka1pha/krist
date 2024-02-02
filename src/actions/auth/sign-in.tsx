@@ -8,6 +8,7 @@ export const signInAction = async (formData: FormData) => {
 	const supabase = createServerActionClient<Database>({ cookies })
 	const email = String(formData.get('email'))
 	const password = String(formData.get('password'))
+	const redirect_url = String(formData.get('redirect'))
 
 	const { error } = await supabase.auth.signInWithPassword({
 		email,
@@ -17,6 +18,6 @@ export const signInAction = async (formData: FormData) => {
 	if (error) {
 		redirect('/auth/sign-in?error=Could not authenticate user')
 	} else {
-		redirect('/')
+		redirect(redirect_url ?? '/')
 	}
 }
