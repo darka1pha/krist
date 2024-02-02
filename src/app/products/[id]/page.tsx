@@ -23,12 +23,20 @@ export const generateMetadata = async ({
 		openGraph: {
 			title: product?.name,
 			description: product?.description,
-			images: [...product?.images!],
+			images: [
+				{
+					url: product?.images[0]!,
+				},
+			],
 		},
 		twitter: {
 			title: product?.name,
 			description: product?.description,
-			images: [...product?.images!],
+			images: [
+				{
+					url: product?.images[0]!,
+				},
+			],
 			card: 'summary_large_image',
 		},
 	}
