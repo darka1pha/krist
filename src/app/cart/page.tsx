@@ -4,25 +4,29 @@ import Header from '@/components/elements/cartItem/header'
 import { Database } from '@/types/supabase'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
+import { cache } from 'react'
 
-const CartPage = async () => {
+const getCartItems = cache(async () => {
 	const supabase = createServerComponentClient<Database>({ cookies })
-	const { data: cart } = await supabase
-		.from('shopping_cart')
-		.select('*')
-		.single()
-	const { data } = await supabase
+	return await supabase
 		.from('cart_items')
 		.select(
 			`
-  *,
-  products (name,price,brand,images)
-  `
+*,
+products (name,price,brand,images)
+`
 		)
 		.order('created_at')
+})
 
-	console.log(cart)
+const getShoppingCart = cache(async () => {
+	const supabase = createServerComponentClient<Database>({ cookies })
+	return await supabase.from('shopping_cart').select('*').single()
+})
 
+const CartPage = async () => {
+	const { data } = await getCartItems()
+	const { data: cart } = await getShoppingCart()
 	return (
 		<main className='paddings'>
 			<h1 className='text-3xl font-bold'>Cart Details</h1>

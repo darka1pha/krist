@@ -7,6 +7,12 @@ import { CitiesOfState, CityProps, StateProps } from '@/types'
 import { Database } from '@/types/supabase'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
+import { cache } from 'react'
+
+const getAddresses = cache(async () => {
+	const supabase = createServerComponentClient<Database>({ cookies })
+	return await supabase.from('addresses').select('*')
+})
 
 const AddressesPage = async ({
 	params: { locale },
@@ -29,8 +35,7 @@ const AddressesPage = async ({
 		)
 	).json()) as CitiesOfState
 
-	const supabase = createServerComponentClient<Database>({ cookies })
-	const { data } = await supabase.from('addresses').select('*')
+	const { data } = await getAddresses()
 
 	return (
 		<div className='col-span-9'>

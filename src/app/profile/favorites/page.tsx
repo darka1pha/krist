@@ -3,15 +3,20 @@ import ProductCard from '@/components/elements/productCard'
 import { Database } from '@/types/supabase'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
+import { cache } from 'react'
 
-const Favorites = async () => {
+const getFavorites = cache(async () => {
 	const supabase = createServerComponentClient<Database>({ cookies })
-	const { data: favorites } = await supabase.from('favorites').select(
+	return await supabase.from('favorites').select(
 		`
   *,
   products (*)
   `
 	)
+})
+
+const Favorites = async () => {
+	const { data: favorites } = await getFavorites()
 
 	return (
 		<div className='col-span-9'>

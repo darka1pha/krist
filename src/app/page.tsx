@@ -7,8 +7,20 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Database } from '@/types/supabase'
 import { cookies } from 'next/headers'
 import ProductCard from '@/components/elements/productCard'
+import { cache } from 'react'
 
 const i18nNamespaces = ['home']
+
+const getProducts = cache(async () => {
+	const supabase = createServerComponentClient<Database>({ cookies })
+	return await supabase.from('products').select('*').limit(10)
+})
+
+const getCategories = cache(async () => {
+	const supabase = createServerComponentClient<Database>({ cookies })
+
+	return await supabase.from('categories').select('*')
+})
 
 export default async function Home({
 	params: { locale },
@@ -16,14 +28,8 @@ export default async function Home({
 	params: { locale: string }
 }) {
 	const { t, resources } = await initTranslations(locale, i18nNamespaces)
-	const supabase = createServerComponentClient<Database>({ cookies })
-
-	const { data: categories, error: categoriesError } = await supabase
-		.from('categories')
-		.select('*')
-	const { data: products, error: productsError } = await supabase
-		.from('products')
-		.select('*')
+	const { data: categories, error: categoriesError } = await getCategories()
+	const { data: products, error: productsError } = await getProducts()
 
 	if (productsError || categoriesError) {
 		throw new Error(productsError?.message ?? categoriesError?.message, {
