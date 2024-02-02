@@ -12,7 +12,6 @@ export const metadata: Metadata = {
 	title: 'Krist | Elevate Your Style, Accentuate Your Elegance',
 	description:
 		'Discover exquisite accessories at Krist - where style meets sophistication. Explore a curated collection of fashion-forward pieces designed to elevate your look. Find the perfect accents to express your unique taste and embrace a world of timeless elegance with Krist.',
-	metadataBase: new URL('https://krist.vercel.app/'),
 	twitter: {
 		card: 'summary_large_image',
 	},
