@@ -3,14 +3,13 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
-const CartLayout = async ({ children }: { children: React.ReactNode }) => {
+const AuthLayout = async ({ children }: { children: React.ReactNode }) => {
 	const supabase = createServerComponentClient<Database>({ cookies })
 	const {
 		data: { user },
 	} = await supabase.auth.getUser()
-
-	if (!user) redirect('/auth/sign-in')
+	if (user) redirect('/profile')
 	return <>{children}</>
 }
 
-export default CartLayout
+export default AuthLayout
