@@ -31,10 +31,12 @@ const Quantity = () => {
 						: true
 				}
 				className='disabled:cursor-not-allowed'>
+				<p className='hidden'>decreace qty</p>
 				<Minus className='text-primary-500' size={18} />
 			</button>
 			<p className='mx-2'>{!params.has('qty') ? 1 : params.get('qty')}</p>
 			<button name='increace qty' onClick={onAddQty}>
+				<p className='hidden'>increace qty</p>
 				<Add className='text-primary-500' size={18} />
 			</button>
 		</div>
