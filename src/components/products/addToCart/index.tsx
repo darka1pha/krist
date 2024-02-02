@@ -6,6 +6,7 @@ import { addToCartAction } from '@/actions/cart'
 import { SubmitButton } from '@/components/elements'
 import { User } from '@supabase/supabase-js'
 import { favoriteAction } from '@/actions/profile'
+import Link from 'next/link'
 
 type AddToCartParams = {
 	liked: boolean | undefined
@@ -30,6 +31,7 @@ const AddToCart = ({ liked, user }: AddToCartParams) => {
 						variant='secondary'
 						name='like button'
 						className='p-4 w-full h-full border-primary-500 border-2 rounded-xl flex justify-center items-center active:scale-95 transition-all'>
+						<p className='hidden'>Like Product</p>
 						<Heart
 							variant={liked ? 'Bold' : 'Outline'}
 							className={liked ? 'text-red-600' : 'text-primary-500'}
@@ -38,13 +40,27 @@ const AddToCart = ({ liked, user }: AddToCartParams) => {
 					</SubmitButton>
 				</form>
 			)}
-			<form action={addToCartAction} className='col-span-4'>
-				<input type='hidden' name='qty' value={searchParams.get('qty') ?? 1} />
-				<input type='hidden' name='id' value={params.id} />
-				<SubmitButton className='btn-primary w-full h-full'>
-					Add to Cart
-				</SubmitButton>
-			</form>
+			{user ? (
+				<form action={addToCartAction} className='col-span-4'>
+					<input
+						type='hidden'
+						name='qty'
+						value={searchParams.get('qty') ?? 1}
+					/>
+					<input type='hidden' name='id' value={params.id} />
+					<SubmitButton className='btn-primary w-full h-full'>
+						Add to Cart
+					</SubmitButton>
+				</form>
+			) : (
+				<Link
+					className='col-span-4 w-full'
+					href={`/auth/sign-in?redirect=/products/${params.id}`}>
+					<SubmitButton className='btn-primary w-full h-full'>
+						Add to Cart
+					</SubmitButton>
+				</Link>
+			)}
 		</div>
 	)
 }
