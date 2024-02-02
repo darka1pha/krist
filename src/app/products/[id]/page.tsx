@@ -3,6 +3,7 @@ import { Database } from '@/types/supabase'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Metadata } from 'next'
 import { cookies } from 'next/headers'
+import { notFound } from 'next/navigation'
 import { cache } from 'react'
 
 const getProduct = cache(async (productId: number) => {
@@ -50,7 +51,12 @@ export const generateMetadata = async ({
 }
 
 const Product = async ({ params: { id } }: { params: { id: number } }) => {
-	const { data: product } = await getProduct(id)
+	const { data: product, error } = await getProduct(id)
+
+	if (error && error.code === 'PGRST116') {
+		notFound()
+	}
+
 	return (
 		<main className='paddings'>
 			<div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
