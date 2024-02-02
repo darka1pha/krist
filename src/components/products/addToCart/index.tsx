@@ -27,6 +27,7 @@ const AddToCart = ({ liked, user }: AddToCartParams) => {
 					/>
 					<input type='hidden' name='id' value={params.id} />
 					<SubmitButton
+						variant='secondary'
 						name='like button'
 						className='p-4 w-full h-full border-primary-500 border-2 rounded-xl flex justify-center items-center active:scale-95 transition-all'>
 						<Heart
@@ -40,7 +41,9 @@ const AddToCart = ({ liked, user }: AddToCartParams) => {
 			<form action={addToCartAction} className='col-span-4'>
 				<input type='hidden' name='qty' value={searchParams.get('qty') ?? 1} />
 				<input type='hidden' name='id' value={params.id} />
-				<SubmitButton className='btn-primary w-full h-full'>Add to Cart</SubmitButton>
+				<SubmitButton className='btn-primary w-full h-full'>
+					Add to Cart
+				</SubmitButton>
 			</form>
 		</div>
 	)
