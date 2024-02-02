@@ -1,8 +1,21 @@
-import { Tables } from '@/types/supabase'
+import { Database, Tables } from '@/types/supabase'
 import { AddToCart, ColorPicker } from '..'
 import SizePicker from '../sizePicker'
+import { cookies } from 'next/headers'
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 
-const Details = ({ product }: { product: Tables<'products'> | null }) => {
+const Details = async ({ product }: { product: Tables<'products'> | null }) => {
+	const supabase = createServerComponentClient<Database>({ cookies })
+	const { data: likeStatus } = await supabase
+		.from('favorites')
+		.select('liked')
+		.eq('id', product?.id!)
+		.single()
+
+	const {
+		data: { user },
+	} = await supabase.auth.getUser()
+
 	return (
 		<div className='px-8 md:px-0'>
 			<div>
@@ -13,7 +26,7 @@ const Details = ({ product }: { product: Tables<'products'> | null }) => {
 			</div>
 			<ColorPicker colors={product?.colors} />
 			<SizePicker sizes={product?.size} />
-			<AddToCart />
+			<AddToCart user={user} liked={likeStatus?.liked} />
 		</div>
 	)
 }
