@@ -29,6 +29,7 @@ export const generateMetadata = async ({
 			title: product?.name,
 			description: product?.description,
 			images: [...product?.images!],
+			card: 'summary_large_image',
 		},
 	}
 
