@@ -10,8 +10,8 @@ export const runtime = 'edge'
 // Image metadata
 export const alt = 'About Acme'
 export const size = {
-	width: 1200,
-	height: 630,
+	width: 920,
+	height: 1280,
 }
 
 export const contentType = 'image/png'
@@ -31,25 +31,25 @@ export default async function og({
 
 	return new ImageResponse(
 		(
-			// ImageResponse JSX element
 			<div
 				style={{
 					fontSize: 32,
 					background: 'white',
-					width: '100%',
-					height: '100vh',
+					width: '920px',
+					height: '1280px',
 					display: 'flex',
 					alignItems: 'center',
 					justifyContent: 'center',
 					borderRadius: '20px',
-					overflow: 'hidden',
-					backgroundImage: `url(${product?.images[0]})`,
+					backgroundColor: 'beige',
+					backgroundImage: `url(${product?.images[0]!})`,
+					backgroundPosition: 'top',
+					backgroundSize: '100% 100%',
 					backgroundRepeat: 'no-repeat',
-					backgroundPosition: 'center',
 				}}>
 				<p
 					style={{
-						backgroundColor: '#ffffff50',
+						backgroundColor: '#ffffff70',
 						padding: 20,
 						borderRadius: 20,
 						fontWeight: 'bold',
