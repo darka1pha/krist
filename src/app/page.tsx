@@ -6,16 +6,9 @@ import CardsGrid from '@/components/cardsGrid'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Database } from '@/types/supabase'
 import { cookies } from 'next/headers'
-import { Metadata } from 'next'
 import ProductCard from '@/components/elements/productCard'
 
 const i18nNamespaces = ['home']
-
-export const metadata: Metadata = {
-	title: 'Krist | Elevate Your Style, Accentuate Your Elegance',
-	description:
-		'Discover exquisite accessories at Krist - where style meets sophistication. Explore a curated collection of fashion-forward pieces designed to elevate your look. Find the perfect accents to express your unique taste and embrace a world of timeless elegance with Krist.',
-}
 
 export default async function Home({
 	params: { locale },
