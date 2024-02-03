@@ -1,6 +1,6 @@
 const ProdileLoading = () => {
 	return (
-		<div className='col-span-9 w-full'>
+		<div className='col-span-12 md:col-span-8 xl:col-span-9 w-full'>
 			<div className='mb-10 flex justify-between items-center w-full' about='header'>
 				<div
 					className='h-16 w-16 rounded-full bg-gray-300 animate-pulse'

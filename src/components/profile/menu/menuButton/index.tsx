@@ -31,7 +31,13 @@ const MenuButton = ({
 				)}
 				<div className='flex items-center w-full h-full'>
 					{icon}
-					<p className='ml-2'>{name}</p>
+					<p
+						className={cn(
+							'ml-2',
+							url !== pathname ? 'hidden md:flex' : 'flex'
+						)}>
+						{name}
+					</p>
 				</div>
 			</button>
 		</Link>

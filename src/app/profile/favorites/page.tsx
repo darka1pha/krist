@@ -19,7 +19,7 @@ const Favorites = async () => {
 	const { data: favorites } = await getFavorites()
 
 	return (
-		<div className='col-span-9'>
+		<div className='col-span-12 md:col-span-8 xl:col-span-9'>
 			<h1 className='text-3xl font-bold '>Favorites</h1>
 			<CardsGrid>
 				{favorites?.map(({ products: product }, key) => (

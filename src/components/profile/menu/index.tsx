@@ -36,10 +36,10 @@ const Menu = async ({ locale }: { locale: string }) => {
 	const supabase = createServerComponentClient<Database>({ cookies })
 	const { data } = await supabase.from('profiles').select('*').single()
 	return (
-		<div className='col-span-3'>
+		<div className='col-span-12 md:col-span-4 lg:col-span-3'>
 			<h1 className='text-3xl font-bold'>{t('title')}</h1>
 			<Header name={data?.name} />
-			<div className='mt-4'>
+			<div className='mt-4 flex md:flex-col justify-between border border-gray-300 p-1 rounded-xl'>
 				{menuButtons.map(({ icon, name, url }, key) => (
 					<MenuButton key={key} name={name} icon={icon} url={url} />
 				))}

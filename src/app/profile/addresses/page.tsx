@@ -38,7 +38,7 @@ const AddressesPage = async ({
 	const { data } = await getAddresses()
 
 	return (
-		<div className='col-span-9'>
+		<div className='col-span-12 md:col-span-8 xl:col-span-9'>
 			<AddressesHeader locale={locale} />
 			<div className='mt-2'>
 				{data?.map(({ details, id, name, phone }) => (

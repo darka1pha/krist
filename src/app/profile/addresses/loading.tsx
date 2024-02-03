@@ -1,6 +1,6 @@
 const AddressesLoading = () => {
 	return (
-		<div className='col-span-9 w-full'>
+		<div className='col-span-12 md:col-span-8 xl:col-span-9 w-full'>
 			<div className='flex w-full justify-between items-center'>
 				<div
 					about='name'
