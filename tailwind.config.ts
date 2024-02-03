@@ -53,7 +53,7 @@ const config: Config = {
 	},
 	plugins: [require('daisyui'), require('@tailwindcss/aspect-ratio')],
 	daisyui: {
-		themes: ['light', 'dark'],
+		themes: ['light'],
 	},
 }
 export default config
