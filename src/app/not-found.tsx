@@ -2,11 +2,11 @@
 
 import Image from 'next/image'
 
-const ErrorBoundary = ({ error }: { error: Error }) => {
+const NotFound = () => {
 	return (
 		<div className='h-[calc(100vh-80px)] w-full flex flex-col justify-center items-center'>
 			<Image
-				src='/images/error.gif'
+				src='/images/404.webp'
 				alt='error image'
 				height={256}
 				width={512}
@@ -15,9 +15,8 @@ const ErrorBoundary = ({ error }: { error: Error }) => {
 					height: 'auto',
 				}}
 			/>
-			<p className='text-3xl'>{error.message}</p>
 		</div>
 	)
 }
 
-export default ErrorBoundary
+export default NotFound
