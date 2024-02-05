@@ -20,23 +20,23 @@ const EditModal = async ({ locale }: { locale: string }) => {
 			<Link href={'/profile'}>
 				<div className='absolute top-0 right-0 h-full w-full bg-primary-500/50 -z-[0]' />
 			</Link>
-			<div className='absolute right-[50%] top-[50%] transform translate-x-[50%] translate-y-[-50%] z-20 bg-white shadow-md rounded-xl p-5'>
+			<div className='absolute right-[50%] w-[80%] sm:w-[70%] lg:w-auto top-[50%] transform translate-x-[50%] translate-y-[-50%] z-20 bg-white shadow-md rounded-xl p-5'>
 				<form
 					action={updateProfileAction}
 					className='grid grid-cols-2 w-full gap-4'>
-					<div className='col-span-1 flex flex-col'>
+					<div className='col-span-2 md:col-span-1 flex flex-col'>
 						<label className='form_label mb-2' htmlFor='name'>
 							{t('form.name')}
 						</label>
 						<input
-							className='input min-w-72'
+							className='input'
 							name='name'
 							placeholder={t('form.name_placeholder')}
 							required
 							defaultValue={data?.name}
 						/>
 					</div>
-					<div className='col-span-1 flex flex-col'>
+					<div className='col-span-2 md:col-span-1 flex flex-col'>
 						<label className='form_label mb-2' htmlFor='email'>
 							{t('form.email')}
 						</label>
@@ -44,7 +44,7 @@ const EditModal = async ({ locale }: { locale: string }) => {
 							value={user?.email}
 							disabled
 							readOnly
-							className='input min-w-72'
+							className='input'
 							name='email'
 							placeholder={t('form.email_placeholder')}
 							required

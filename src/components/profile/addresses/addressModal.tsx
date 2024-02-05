@@ -24,27 +24,27 @@ const AddressModal = async ({
 			<Link href={'/profile/addresses'}>
 				<div className='absolute top-0 right-0 h-full w-full bg-primary-500/50 -z-[0]' />
 			</Link>
-			<div className='absolute right-[50%] top-[50%] transform translate-x-[50%] translate-y-[-50%] z-20 bg-white shadow-md rounded-xl p-5'>
+			<div className='absolute w-[80%] sm:w-[70%] lg:w-auto right-[50%] top-[50%] transform translate-x-[50%] translate-y-[-50%] z-20 bg-white shadow-md rounded-xl p-5'>
 				<form
 					action={addNewAddressAction}
 					className='grid grid-cols-2 w-full gap-4'>
-					<div className='col-span-1 flex flex-col'>
+					<div className='col-span-2 md:col-span-1 flex flex-col'>
 						<label className='form_label mb-2' htmlFor='name'>
 							{t('addresses.form.name')}
 						</label>
 						<input
-							className='input min-w-72'
+							className='input min-w-0'
 							name='name'
 							placeholder={t('form.name_placeholder')}
 							required
 						/>
 					</div>
-					<div className='col-span-1 flex flex-col'>
+					<div className='col-span-2 md:col-span-1 flex flex-col'>
 						<label className='form_label mb-2' htmlFor='phone'>
 							{t('addresses.form.phone')}
 						</label>
 						<input
-							className='input min-w-72'
+							className='input min-w-0'
 							pattern='^(\+98|0|0098)?9\d{9}$|^\+98[1-8]\d{10}$|^(\+98|0|0098)?21[0-9]\d{7}$'
 							title='Please enter a valid Iranian phone number'
 							name='phone'
@@ -52,7 +52,7 @@ const AddressModal = async ({
 							required
 						/>
 					</div>
-					<div className='col-span-1 flex flex-col'>
+					<div className='col-span-2 md:col-span-1 flex flex-col'>
 						<label className='form_label mb-2' htmlFor='state'>
 							{t('addresses.form.state')}
 						</label>
@@ -68,7 +68,7 @@ const AddressModal = async ({
 							))}
 						</FormSelect>
 					</div>
-					<div className='col-span-1 flex flex-col'>
+					<div className='col-span-2 md:col-span-1 flex flex-col'>
 						<label className='form_label mb-2' htmlFor='city'>
 							{t('addresses.form.city')}
 						</label>
@@ -89,7 +89,7 @@ const AddressModal = async ({
 							{t('addresses.form.details')}
 						</label>
 						<input
-							className='input min-w-72'
+							className='input min-w-0'
 							name='details'
 							placeholder={t('addresses.form.details_placeholder')}
 							required
