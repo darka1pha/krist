@@ -1,10 +1,8 @@
-import { Database } from '@/types/supabase'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 
 const CartLayout = async ({ children }: { children: React.ReactNode }) => {
-	const supabase = createServerComponentClient<Database>({ cookies })
+	const supabase = await createClient()
 	const {
 		data: { user },
 	} = await supabase.auth.getUser()

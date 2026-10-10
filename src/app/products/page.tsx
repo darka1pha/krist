@@ -1,38 +1,45 @@
 import { getCategories, getProducts } from '@/actions/pdoducts'
 import { Container, Filter } from '@/components/products'
 import { CategoriesProps } from '@/types'
-import { PostgrestError } from '@supabase/supabase-js'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-	title: 'Products',
+	title: 'Products Collection | Krist',
 	description:
-		"Explore the diverse world of accessories at Krist's Categories page, where every category is a curated journey into style and sophistication. From statement jewelry to chic handbags, discover a spectrum of fashion-forward choices that cater to every taste. Dive into the latest trends or find timeless classics – our Categories page is your gateway to a meticulously crafted collection, ensuring you'll always find the perfect accessory to complement your unique style. Uncover the essence of elegance as you navigate through a spectrum of options that redefine fashion at Krist.",
-		
+		"Explore the diverse world of accessories at Krist - statement jewelry to chic handbags, discover curated fashion-forward choices that cater to every taste.",
 }
 
 const Products = async ({
 	searchParams,
 }: {
-	searchParams: { [key: string]: string }
+	searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) => {
-	const { data: products, error } = await getProducts({ searchParams })
-	const { data: categories, error: categoryError } =
-		(await getCategories()) as {
-			data: CategoriesProps[]
-			error: PostgrestError | null
+	const resolvedSearchParams = (await searchParams) || {}
+	const normalizedSearchParams: { [key: string]: string } = {}
+	for (const [key, value] of Object.entries(resolvedSearchParams)) {
+		if (typeof value === 'string') {
+			normalizedSearchParams[key] = value
+		} else if (Array.isArray(value)) {
+			normalizedSearchParams[key] = value.join(',')
 		}
-
-	if (error || categoryError) {
-		throw new Error(error?.message ?? categoryError?.message, {
-			cause: error?.details || categoryError?.message,
-		})
 	}
 
+	const productsData = await getProducts({
+		searchParams: normalizedSearchParams,
+	})
+	const products = Array.isArray(productsData)
+		? productsData
+		: (productsData as any)?.data || []
+
+	const categoriesData = await getCategories()
+	const categories = Array.isArray(categoriesData)
+		? (categoriesData as unknown as CategoriesProps[])
+		: (categoriesData as any)?.data || []
+
 	return (
-		<main className='grid grid-cols-12 gap-5 min-h-screen paddings'>
-			<Filter categories={categories} />
-			<Container products={products} />
+		<main className='max-w-7xl mx-auto grid grid-cols-12 gap-6 min-h-screen paddings'>
+			<Filter categories={categories || []} />
+			<Container products={products || []} />
 		</main>
 	)
 }

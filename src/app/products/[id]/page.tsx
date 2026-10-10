@@ -1,66 +1,66 @@
 import { Details, Gallery } from '@/components/products'
-import { Database } from '@/types/supabase'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/utils/supabase/server'
 import { Metadata } from 'next'
-import { cookies } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { cache } from 'react'
+import { fallbackProducts } from '@/actions/pdoducts'
 
 const getProduct = cache(async (productId: number) => {
-	const supabase = createServerComponentClient<Database>({ cookies })
-	return await supabase
-		.from('products')
-		.select('*')
-		.eq('id', productId)
-		.single()
+	try {
+		const supabase = await createClient()
+		const { data } = await supabase
+			.from('products')
+			.select('*')
+			.eq('id', productId)
+			.maybeSingle()
+
+		if (data) return data
+	} catch (e) {
+		console.warn('Supabase product fetch fallback:', e)
+	}
+
+	return fallbackProducts.find((p) => p.id === productId) || fallbackProducts[0] || null
 })
 
 export const generateMetadata = async ({
-	params: { id },
+	params,
 }: {
-	params: { id: number }
-	searchParams: { qty: number }
-}) => {
-	const { data: product } = await getProduct(id)
+	params: Promise<{ id: string }>
+}): Promise<Metadata> => {
+	const { id } = await params
+	const product = await getProduct(Number(id))
 
-	const metadata: Metadata = {
-		title: product?.name,
-		description: product?.description,
+	if (!product) return { title: 'Product Not Found | Krist' }
+
+	return {
+		title: `${product.name} | Krist`,
+		description: product.description,
 		openGraph: {
-			title: product?.name,
-			description: product?.description,
-			images: [
-				{
-					url: product?.images[0]!,
-				},
-			],
+			title: product.name,
+			description: product.description,
+			images: product.images?.[0] ? [{ url: product.images[0] }] : [],
 		},
 		twitter: {
-			title: product?.name,
-			description: product?.description,
-			images: [
-				{
-					url: product?.images[0]!,
-				},
-			],
+			title: product.name,
+			description: product.description,
+			images: product.images?.[0] ? [{ url: product.images[0] }] : [],
 			card: 'summary_large_image',
 		},
 	}
-
-	return metadata
 }
 
-const Product = async ({ params: { id } }: { params: { id: number } }) => {
-	const { data: product, error } = await getProduct(id)
+const Product = async ({ params }: { params: Promise<{ id: string }> }) => {
+	const { id } = await params
+	const product = await getProduct(Number(id))
 
-	if (error && error.code === 'PGRST116') {
+	if (!product) {
 		notFound()
 	}
 
 	return (
-		<main className='paddings'>
-			<div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
-				<Gallery images={product?.images || []} />
+		<main className='max-w-7xl mx-auto paddings'>
+			<div className='grid grid-cols-1 md:grid-cols-2 gap-10 items-start'>
+				<Gallery images={product.images || []} />
 				<Details product={product} />
 			</div>
 		</main>

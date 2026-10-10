@@ -1,56 +1,65 @@
 'use client'
 import { motion } from 'framer-motion'
-import { Moon, Sun1 } from 'iconsax-react'
+import { Sun, Moon } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 
 export default function DarkModeSwitch() {
 	const [theme, setTheme] = useState('light')
+	const [mounted, setMounted] = useState(false)
+
+	const applyTheme = (t: string) => {
+		const root = document.documentElement
+		if (t === 'dark') {
+			root.classList.add('dark')
+		} else {
+			root.classList.remove('dark')
+		}
+		root.setAttribute('data-theme', t)
+	}
 
 	const toggleSwitch = () => {
-		theme === 'dark' ? setTheme('light') : setTheme('dark')
-		localStorage.setItem('theme', theme === 'dark' ? 'light' : 'dark')
+		const nextTheme = theme === 'dark' ? 'light' : 'dark'
+		setTheme(nextTheme)
+		localStorage.setItem('theme', nextTheme)
+		applyTheme(nextTheme)
 	}
 
 	const spring = {
-		type: 'spring',
+		type: 'spring' as const,
 		stiffness: 700,
 		damping: 30,
 	}
 
 	useEffect(() => {
-		const html = document.querySelector('html')
-		if (html) {
-			html.setAttribute('data-theme', theme)
-			html.className = theme
-		}
-	}, [theme])
-
-	useEffect(() => {
-		const currentTheme = localStorage.getItem("theme")
-		if (currentTheme) {
-			setTheme(currentTheme)
+		setMounted(true)
+		const savedTheme = localStorage.getItem('theme')
+		if (savedTheme) {
+			setTheme(savedTheme)
+			applyTheme(savedTheme)
+		} else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+			setTheme('dark')
+			applyTheme('dark')
 		}
 	}, [])
 
 	return (
-		<div
+		<button
+			type='button'
 			onClick={toggleSwitch}
-			className={`flex w-fit h-fit rounded-[48px] justify-center items-center shadow-inner hover:cursor-pointer  dark:bg-zinc-700`}>
+			aria-label='Toggle color theme'
+			className='flex items-center justify-center p-2 rounded-xl text-zinc-600 dark:text-zinc-300 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer'>
 			<motion.div
-				className='flex h-9 w-9 items-center justify-center rounded-full'
 				layout
-				transition={spring}>
-				<motion.button
-					data-toggle-theme='dark,light'
-					data-choose-theme
-					whileTap={{ rotate: 360 }}>
-					{theme === 'light' ? (
-						<Sun1 className='h-6 w-6 text-yellow-500' />
-					) : (
-						<Moon className='h-6 w-6 text-white' />
-					)}
-				</motion.button>
+				transition={spring}
+				key={mounted ? theme : 'initial'}
+				initial={{ scale: 0.8, rotate: -20, opacity: 0 }}
+				animate={{ scale: 1, rotate: 0, opacity: 1 }}>
+				{theme === 'light' ? (
+					<Sun className='h-5 w-5 text-amber-500 fill-amber-500/20' />
+				) : (
+					<Moon className='h-5 w-5 text-indigo-400 fill-indigo-400/20' />
+				)}
 			</motion.div>
-		</div>
+		</button>
 	)
 }

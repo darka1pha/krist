@@ -1,33 +1,36 @@
 'use client'
 import { ButtonHTMLAttributes } from 'react'
 import { useFormStatus } from 'react-dom'
+import { Loader2 } from 'lucide-react'
 
 interface SubmitButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	variant?: 'primary' | 'secondary'
 }
 
-const SubmitButton = (props: SubmitButtonProps) => {
+const SubmitButton = ({
+	children,
+	variant,
+	className,
+	disabled,
+	...props
+}: SubmitButtonProps) => {
 	const { pending } = useFormStatus()
+	const isDisabled = pending || disabled
 
 	return (
 		<button
-			className='flex justify-center items-center'
-			disabled={pending}
-			aria-disabled={pending}
+			disabled={isDisabled}
+			aria-disabled={isDisabled}
 			type='submit'
+			className={`inline-flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed ${className || ''}`}
 			{...props}>
 			{pending ? (
-				<span
-					className={`loading h-full loading-dots loading-sm ${
-						props.variant
-							? props.variant === 'secondary'
-								? 'bg-primary-500'
-								: 'bg-red-50'
-							: 'bg-red-50'
-					}`}
-				/>
+				<>
+					<Loader2 size={16} className='animate-spin' />
+					<span>Please wait...</span>
+				</>
 			) : (
-				props.children
+				children
 			)}
 		</button>
 	)

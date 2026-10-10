@@ -52,6 +52,7 @@ const config: Config = {
 		},
 	},
 	plugins: [require('daisyui'), require('@tailwindcss/aspect-ratio')],
+	// @ts-ignore
 	daisyui: {
 		themes: ['light'],
 	},

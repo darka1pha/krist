@@ -1,6 +1,7 @@
 import { Avatar as Profile } from '@mui/material'
-import { Edit2 } from 'iconsax-react'
+import { Pencil } from 'lucide-react'
 import Link from 'next/link'
+
 const Avatar = ({
 	name,
 	avatarUrl,
@@ -16,19 +17,24 @@ const Avatar = ({
 					src={avatarUrl || ''}
 					alt={name}
 				/>
-				<button
-					name='edit profile'
-					className='h-8 w-8 rounded-xl flex justify-center items-center bg-primary-500 absolute -bottom-2 -right-2'>
-					<Edit2 size={15} className='text-white' />
-				</button>
+				<Link href={'/profile?edit=true'}>
+					<button
+						type='button'
+						name='edit profile'
+						aria-label='Edit avatar'
+						className='h-8 w-8 rounded-full flex justify-center items-center bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 absolute -bottom-1 -right-1 shadow-md hover:scale-105 transition-transform'>
+						<Pencil size={14} />
+					</button>
+				</Link>
 			</div>
 			<div>
 				<Link href={'/profile?edit=true'}>
 					<button
+						type='button'
 						name='edit information'
-						className='flex btn-primary items-center'>
-						<Edit2 size={18} className='text-white mr-2' />
-						Edit Profile
+						className='flex btn-primary items-center gap-2 text-sm'>
+						<Pencil size={16} />
+						<span>Edit Profile</span>
 					</button>
 				</Link>
 			</div>

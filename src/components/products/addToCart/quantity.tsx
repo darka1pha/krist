@@ -1,43 +1,43 @@
 'use client'
 import { addSearchParams } from '@/utils'
-import { Add, Minus } from 'iconsax-react'
+import { Minus, Plus } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 const Quantity = () => {
 	const params = useSearchParams()
 	const router = useRouter()
+	const currentQty = params.has('qty') ? Number(params.get('qty')) : 1
+
 	const onAddQty = () => {
-		const currentQyt = params.has('qty') ? Number(params.get('qty')) : 1
-		const newUrl = addSearchParams('qty', String(currentQyt + 1))
+		const newUrl = addSearchParams('qty', String(currentQty + 1))
 		router.push(newUrl)
 	}
 	const onMinusQty = () => {
-		const currentQty = params.has('qty') ? Number(params.get('qty')) : 1
-		if (currentQty !== 1) {
+		if (currentQty > 1) {
 			const newUrl = addSearchParams('qty', String(currentQty - 1))
 			router.push(newUrl)
 		}
 	}
+
 	return (
-		<div className='p-4 border-primary-500 border-2 col-span-3  sm:col-span-2 flex rounded-xl justify-between items-center'>
+		<div className='h-12 min-w-[120px] px-2 rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex items-center justify-between shadow-sm'>
 			<button
-				name='decreace qty'
+				name='decrease quantity'
+				aria-label='Decrease quantity'
 				onClick={onMinusQty}
-				disabled={
-					params.has('qty')
-						? Number(params.get('qty')) === 1
-							? true
-							: false
-						: true
-				}
-				className='disabled:cursor-not-allowed'>
-				<p className='hidden'>decreace qty</p>
-				<Minus className='text-primary-500' size={18} />
+				disabled={currentQty <= 1}
+				className='w-8 h-8 rounded-lg flex items-center justify-center hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer'>
+				<Minus size={14} />
 			</button>
-			<p className='mx-2'>{!params.has('qty') ? 1 : params.get('qty')}</p>
-			<button name='increace qty' onClick={onAddQty}>
-				<p className='hidden'>increace qty</p>
-				<Add className='text-primary-500' size={18} />
+			<span className='font-mono font-bold text-sm px-2'>
+				{currentQty}
+			</span>
+			<button
+				name='increase quantity'
+				aria-label='Increase quantity'
+				onClick={onAddQty}
+				className='w-8 h-8 rounded-lg flex items-center justify-center hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 transition-all cursor-pointer'>
+				<Plus size={14} />
 			</button>
 		</div>
 	)

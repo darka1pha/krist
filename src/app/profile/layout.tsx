@@ -1,18 +1,17 @@
 import { Menu } from '@/components/profile'
-import { Database } from '@/types/supabase'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-
-import { cookies } from 'next/headers'
+import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 
 const ProfileLayout = async ({
-	params: { locale },
+	params,
 	children,
 }: {
 	children: React.ReactNode
-	params: { locale: string }
+	params?: Promise<{ locale?: string }>
 }) => {
-	const supabase = createServerComponentClient<Database>({ cookies })
+	const resolvedParams = params ? await params : undefined
+	const locale = resolvedParams?.locale || 'en'
+	const supabase = await createClient()
 	const {
 		data: { user },
 	} = await supabase.auth.getUser()
@@ -20,8 +19,8 @@ const ProfileLayout = async ({
 	if (!user) redirect('/auth/sign-in')
 
 	return (
-		<main className='paddings'>
-			<div className='grid gap-5 grid-cols-12 w-full'>
+		<main className='paddings max-w-7xl mx-auto'>
+			<div className='grid gap-6 grid-cols-12 w-full'>
 				<Menu locale={locale} />
 				{children}
 			</div>

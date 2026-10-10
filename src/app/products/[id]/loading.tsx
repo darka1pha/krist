@@ -1,57 +1,106 @@
 const ProductLoading = () => {
 	return (
-		<main className='paddings h-[calc(100vh-80px)]'>
-			<div className='grid grid-cols-1 md:grid-cols-2 gap-5 h-full'>
-				<div
-					className='px-8 md:px-0 bg-gray-300 animate-pulse h-[40vh] md:h-full rounded-xl'
-					about='Gallery'
-				/>
-				<div className='px-8 md:px-0' about='Info'>
-					<div>
-						<div
-							className='h-12 my-2 w-44 bg-gray-300 animate-pulse rounded-xl'
-							about='brand'
-						/>
-						<div
-							className='h-10 my-2 w-48 bg-gray-300 animate-pulse rounded-xl'
-							about='name'
-						/>
-						<div
-							className='h-10 my-2 w-40 bg-gray-300 animate-pulse rounded-xl'
-							about='price'
-						/>
-						<div className='mt-6' about='description'>
+		<main className='max-w-7xl mx-auto paddings animate-pulse'>
+			{/* Breadcrumb Skeleton */}
+			<div className='flex items-center gap-2 mb-8'>
+				<div className='h-4 w-12 rounded bg-zinc-200 dark:bg-zinc-800' />
+				<div className='h-4 w-3 rounded bg-zinc-200 dark:bg-zinc-800' />
+				<div className='h-4 w-16 rounded bg-zinc-200 dark:bg-zinc-800' />
+				<div className='h-4 w-3 rounded bg-zinc-200 dark:bg-zinc-800' />
+				<div className='h-4 w-28 rounded bg-zinc-200 dark:bg-zinc-800' />
+			</div>
+
+			<div className='grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14'>
+				{/* Gallery Column Skeleton */}
+				<div className='space-y-4'>
+					<div className='w-full aspect-[4/5] rounded-3xl bg-zinc-200 dark:bg-zinc-800' />
+					<div className='grid grid-cols-4 gap-3'>
+						{[...Array(4)].map((_, i) => (
 							<div
-								className='h-10 my-2 w-full bg-gray-300 animate-pulse rounded-xl'
-								about='line1'
+								key={i}
+								className='aspect-square rounded-2xl bg-zinc-200 dark:bg-zinc-800'
 							/>
-							<div
-								className='h-10 my-2 w-[65%] bg-gray-300 animate-pulse rounded-xl'
-								about='line2'
-							/>
+						))}
+					</div>
+				</div>
+
+				{/* Product Info Column Skeleton */}
+				<div className='space-y-6'>
+					{/* Brand & Title */}
+					<div className='space-y-3'>
+						<div className='h-6 w-24 rounded-full bg-zinc-200 dark:bg-zinc-800' />
+						<div className='space-y-2'>
+							<div className='h-10 w-4/5 rounded-2xl bg-zinc-300 dark:bg-zinc-700' />
+							<div className='h-10 w-3/5 rounded-2xl bg-zinc-300 dark:bg-zinc-700' />
+						</div>
+
+						{/* Ratings & Stock */}
+						<div className='flex items-center gap-4 pt-1'>
+							<div className='flex items-center gap-1.5'>
+								<div className='h-4 w-24 rounded bg-amber-200 dark:bg-amber-950/40' />
+								<div className='h-4 w-8 rounded bg-zinc-200 dark:bg-zinc-800' />
+							</div>
+							<div className='h-6 w-24 rounded-full bg-emerald-100 dark:bg-emerald-950/40' />
+						</div>
+
+						{/* Price */}
+						<div className='flex items-baseline gap-3 pt-3'>
+							<div className='h-10 w-28 rounded-xl bg-zinc-300 dark:bg-zinc-700' />
+							<div className='h-6 w-20 rounded-lg bg-zinc-200 dark:bg-zinc-800' />
+							<div className='h-6 w-20 rounded-md bg-emerald-100 dark:bg-emerald-950/40' />
 						</div>
 					</div>
-					<div className='my-5'>
-						<h3 className='h-8 w-16 mb-4 bg-gray-300 animate-pulse rounded-xl' />
-						<div className='flex flex-wrap'>
-							{Array.from(new Array(4)).map((i) => (
-								<div key={i} className='h-10 w-10 rounded-lg m-2 bg-gray-300 animate-pulse ' />
-							))}
-						</div>
+
+					{/* Description */}
+					<div className='space-y-2 py-4 border-y border-gray-100 dark:border-zinc-800'>
+						<div className='h-4 w-full rounded bg-zinc-200 dark:bg-zinc-800' />
+						<div className='h-4 w-11/12 rounded bg-zinc-200 dark:bg-zinc-800' />
+						<div className='h-4 w-3/4 rounded bg-zinc-200 dark:bg-zinc-800' />
 					</div>
-					<div className='my-5'>
-						<h3 className='h-8 w-16 mb-4 bg-gray-300 animate-pulse rounded-xl' />
-						<div className='flex flex-wrap'>
-							{Array.from(new Array(2)).map((i) => (
-								<div key={i} className='h-10 w-10 rounded-lg mx-2 bg-gray-300 animate-pulse ' />
+
+					{/* Color Picker Skeleton */}
+					<div className='space-y-2'>
+						<div className='h-4 w-14 rounded bg-zinc-200 dark:bg-zinc-800' />
+						<div className='flex gap-2.5'>
+							{[...Array(4)].map((_, i) => (
+								<div
+									key={i}
+									className='w-8 h-8 rounded-full bg-zinc-200 dark:bg-zinc-800'
+								/>
 							))}
 						</div>
 					</div>
 
-					<div className='grid grid-cols-4 sm:grid-cols-7 gap-2 h-14'>
-						<div className='col-span-3  sm:col-span-2  bg-gray-300 animate-pulse rounded-xl h-full' />
-						<div className='sm:col-span-1  bg-gray-300 animate-pulse rounded-xl h-full' />
-						<div className='col-span-4 bg-gray-300 animate-pulse rounded-xl h-full' />
+					{/* Size Picker Skeleton */}
+					<div className='space-y-2'>
+						<div className='h-4 w-12 rounded bg-zinc-200 dark:bg-zinc-800' />
+						<div className='flex gap-2.5'>
+							{[...Array(4)].map((_, i) => (
+								<div
+									key={i}
+									className='w-12 h-10 rounded-xl bg-zinc-200 dark:bg-zinc-800'
+								/>
+							))}
+						</div>
+					</div>
+
+					{/* Quantity & CTA Skeleton */}
+					<div className='flex items-center gap-3 pt-4'>
+						<div className='h-12 w-32 rounded-xl bg-zinc-200 dark:bg-zinc-800 shrink-0' />
+						<div className='h-12 flex-1 rounded-xl bg-zinc-400 dark:bg-zinc-700' />
+						<div className='h-12 w-12 rounded-xl bg-zinc-200 dark:bg-zinc-800 shrink-0' />
+					</div>
+
+					{/* Trust Badges */}
+					<div className='grid grid-cols-3 gap-3 pt-6 border-t border-gray-100 dark:border-zinc-800'>
+						{[...Array(3)].map((_, i) => (
+							<div
+								key={i}
+								className='p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900 flex flex-col items-center gap-2'>
+								<div className='w-6 h-6 rounded-full bg-zinc-200 dark:bg-zinc-800' />
+								<div className='h-3 w-16 rounded bg-zinc-200 dark:bg-zinc-800' />
+							</div>
+						))}
 					</div>
 				</div>
 			</div>

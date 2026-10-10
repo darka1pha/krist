@@ -1,9 +1,8 @@
-import { Call, Edit, Trash } from 'iconsax-react'
+import { Phone, Pencil, Trash2 } from 'lucide-react'
 
 const AddressCard = ({
 	name,
 	details,
-	id,
 	phone,
 }: {
 	name: string
@@ -12,23 +11,27 @@ const AddressCard = ({
 	phone: string
 }) => {
 	return (
-		<div className='border-b border-gray-300 py-4 flex'>
+		<div className='border border-gray-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-2xl p-5 mb-4 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4'>
 			<div className='flex-1'>
-				<h1 className='text-2xl font-bold'>{name}</h1>
-				<p className='mt-2'>{details}</p>
-				<div className='flex items-center mt-2'>
-					<Call size={18} />
-					<p className='ml-2 text-sm'>{phone}</p>
+				<h3 className='text-lg font-bold text-zinc-900 dark:text-zinc-100'>{name}</h3>
+				<p className='mt-1 text-sm text-zinc-600 dark:text-zinc-400'>{details}</p>
+				<div className='flex items-center gap-2 mt-2 text-xs text-zinc-500 dark:text-zinc-400'>
+					<Phone size={14} className='text-zinc-400' />
+					<span>{phone}</span>
 				</div>
 			</div>
-			<div className='flex-1 flex flex-col items-end'>
-				<button className='p-3 rounded-2xl mb-2 bg-[#f6f6f6] flex items-center text-sm active:scale-95 transition-all min-w-[90px] justify-center'>
-					<Edit size={18} />
-					<p className='ml-2'>Edit</p>
+			<div className='flex items-center gap-2 self-end sm:self-center'>
+				<button
+					type='button'
+					className='px-3.5 py-2 rounded-xl bg-gray-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-gray-200 dark:hover:bg-zinc-700 flex items-center gap-1.5 text-xs font-medium active:scale-95 transition-all'>
+					<Pencil size={14} />
+					<span>Edit</span>
 				</button>
-				<button className='p-3 rounded-2xl bg-[#f6f6f6] text-red-500 flex items-center text-sm active:scale-95 transition-all min-w-[90px] justify-center'>
-					<Trash size={18} />
-					<p className='ml-2'>Delete</p>
+				<button
+					type='button'
+					className='px-3.5 py-2 rounded-xl bg-red-50 dark:bg-red-950/30 text-red-600 hover:bg-red-100 dark:hover:bg-red-900/40 flex items-center gap-1.5 text-xs font-medium active:scale-95 transition-all'>
+					<Trash2 size={14} />
+					<span>Delete</span>
 				</button>
 			</div>
 		</div>

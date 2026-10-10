@@ -1,16 +1,14 @@
-import { Database } from '@/types/supabase'
-import { createServerActionClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/utils/supabase/server'
 import { MetadataRoute } from 'next'
-import { cookies } from 'next/headers'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-	const supabase = createServerActionClient<Database>({ cookies })
+	const supabase = await createClient()
 	const { data } = await supabase.from('products').select('id,created_at')
 
-	const products =
-		data?.map(({ id, created_at }) => ({
-			url: `https://krist.vercel.app/products/${id}`,
-			lastModified: created_at,
+	const products: MetadataRoute.Sitemap =
+		data?.map((item: { id: number; created_at: string }) => ({
+			url: `https://krist.vercel.app/products/${item.id}`,
+			lastModified: new Date(item.created_at),
 			priority: 0.8,
 		})) || []
 

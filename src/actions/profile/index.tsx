@@ -1,9 +1,7 @@
 'use server'
 
-import { Database } from '@/types/supabase'
-import { createServerActionClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
-import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { getCurrentPathname } from '@/utils'
 
@@ -11,14 +9,17 @@ export const updateProfileAction = async (formData: FormData) => {
 	'use server'
 	const name = String(formData.get('name'))
 	const address = String(formData.get('address'))
-	const supabase = createServerActionClient<Database>({ cookies })
+	const supabase = await createClient()
 	const {
 		data: { user },
 	} = await supabase.auth.getUser()
-	const { data: infoUpdateData, error: infoError } = await supabase
+
+	if (!user) redirect('/auth/sign-in')
+
+	const { error: infoError } = await supabase
 		.from('profiles')
 		.update({ address, name })
-		.eq('id', user?.id!)
+		.eq('id', user.id)
 
 	if (infoError) {
 		redirect(`/profile?error=${infoError?.message}`)
@@ -30,7 +31,7 @@ export const updateProfileAction = async (formData: FormData) => {
 
 export const addNewAddressAction = async (formData: FormData) => {
 	'use server'
-	const supabase = createServerActionClient<Database>({ cookies })
+	const supabase = await createClient()
 
 	const name = String(formData.get('name'))
 	const details = String(formData.get('details'))
@@ -42,14 +43,16 @@ export const addNewAddressAction = async (formData: FormData) => {
 		data: { user },
 	} = await supabase.auth.getUser()
 
-	const { data, error } = await supabase.from('addresses').insert({
+	if (!user) redirect('/auth/sign-in')
+
+	const { error } = await supabase.from('addresses').insert({
 		city,
 		name,
 		phone,
 		details,
 		state,
-		user_id: user?.id!,
-		created_at: new Date(Date.now()).toLocaleString(),
+		user_id: user.id,
+		created_at: new Date(Date.now()).toISOString(),
 	})
 
 	if (error) {
@@ -61,10 +64,12 @@ export const addNewAddressAction = async (formData: FormData) => {
 }
 
 export const favoriteAction = async (formData: FormData) => {
-	const supabase = createServerActionClient<Database>({ cookies })
+	const supabase = await createClient()
 	const {
 		data: { user },
 	} = await supabase.auth.getUser()
+
+	if (!user) return
 
 	const id = Number(formData.get('id'))
 	const liked = String(formData.get('liked'))
@@ -73,12 +78,13 @@ export const favoriteAction = async (formData: FormData) => {
 		liked === 'false'
 			? await supabase
 					.from('favorites')
-					.insert({ id, user_id: user?.id!, liked: true })
+					.insert({ id, user_id: user.id, liked: true })
 			: await supabase.from('favorites').delete().eq('id', id)
 
 	if (error) {
 		throw new Error(error.message, { cause: error.details })
 	} else {
-		revalidatePath(getCurrentPathname())
+		const path = await getCurrentPathname()
+		if (path) revalidatePath(path)
 	}
 }

@@ -1,7 +1,7 @@
 'use client'
 import { Swiper as SwiperContainer, SwiperSlide } from 'swiper/react'
 import { CategoryCard } from '../elements'
-import { ArrowLeft2, ArrowRight2 } from 'iconsax-react'
+import { ChevronLeft, ChevronRight, Layers } from 'lucide-react'
 import { useState } from 'react'
 import Swiper from 'swiper'
 
@@ -34,43 +34,48 @@ const CardsSlider = ({
 	}
 
 	return (
-		<div className='overflow-hidden mb-16'>
-			<div className='flex my-10 justify-between items-center flex-col md:flex-row'>
-				<h2 className='text-2xl md:text-3xl font-bold'>Shop By Category</h2>
-				<div className='mt-6 md:mt-0'>
+		<div className='overflow-hidden my-12'>
+			<div className='flex mb-8 justify-between items-end flex-row'>
+				<div>
+					<div className='inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-100/20 text-xs font-semibold uppercase tracking-wider mb-2 text-zinc-900 dark:text-zinc-100'>
+						<Layers size={14} /> Curated Departments
+					</div>
+					<h2 className='text-2xl sm:text-3xl font-extrabold tracking-tight'>
+						Shop By Category
+					</h2>
+				</div>
+				<div className='flex items-center gap-2'>
 					<button
 						name='prev slide'
+						aria-label='Previous slide'
 						disabled={!allowLeft}
 						onClick={onPrevSlide}
-						className='btn-primary mx-2'>
-						<ArrowLeft2 size={18} />
+						className='w-10 h-10 rounded-full border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed transition-all'>
+						<ChevronLeft size={18} />
 					</button>
 					<button
 						name='next slide'
+						aria-label='Next slide'
 						disabled={!allowRight}
 						onClick={onNextSlide}
-						className='btn-primary mx-2'>
-						<ArrowRight2 size={18} />
+						className='w-10 h-10 rounded-full border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex items-center justify-center hover:bg-zinc-100 dark:hover:bg-zinc-800 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed transition-all'>
+						<ChevronRight size={18} />
 					</button>
 				</div>
 			</div>
-			<div className='md:px-5 xl:px-20'>
+			<div>
 				<SwiperContainer
 					onSwiper={(swiper) => setSwiperRef(swiper)}
-					spaceBetween={50}
-					slidesPerView={3}
+					spaceBetween={20}
+					slidesPerView={2}
 					breakpoints={{
-						0: {
-							slidesPerView: 2,
-							spaceBetween: 10,
-						},
 						640: {
 							slidesPerView: 3,
 							spaceBetween: 20,
 						},
-						920: {
+						1024: {
 							slidesPerView: 4,
-							spaceBetween: 30,
+							spaceBetween: 24,
 						},
 					}}>
 					{data?.map(({ id, name, poster_url }) => (

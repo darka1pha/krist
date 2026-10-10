@@ -1,11 +1,10 @@
-import { Database } from '@/types/supabase'
-import { createServerActionClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+'use server'
+
+import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 
 export const signInAction = async (formData: FormData) => {
-	'use server'
-	const supabase = createServerActionClient<Database>({ cookies })
+	const supabase = await createClient()
 	const email = String(formData.get('email'))
 	const password = String(formData.get('password'))
 	const redirect_url = String(formData.get('redirect'))
@@ -18,6 +17,6 @@ export const signInAction = async (formData: FormData) => {
 	if (error) {
 		redirect('/auth/sign-in?error=Could not authenticate user')
 	} else {
-		redirect(redirect_url ?? '/')
+		redirect(redirect_url && redirect_url !== 'undefined' ? redirect_url : '/')
 	}
 }
