@@ -15,7 +15,7 @@ const PersonalInfo = async ({ locale }: { locale: string }) => {
 		data: { user },
 	} = await supabase.auth.getUser()
 	return (
-		<div className='col-span-9'>
+		<div className='w-full space-y-6'>
 			<Avatar name={data?.name || ''} avatarUrl={data?.avatar_url || ''} />
 			<InfoForm
 				name={data?.name}

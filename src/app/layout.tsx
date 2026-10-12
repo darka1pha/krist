@@ -29,6 +29,8 @@ export function generateStaticParams() {
 	return i18nConfig.locales.map((locale) => ({ locale }))
 }
 
+import { ToastProvider } from '@/components/toast'
+
 export default async function RootLayout({
 	children,
 	params,
@@ -64,9 +66,11 @@ export default async function RootLayout({
 			</head>
 			<body
 				className={`${jost.className} min-h-screen bg-white text-zinc-900 antialiased selection:bg-zinc-900 selection:text-white dark:bg-zinc-950 dark:text-zinc-100 dark:selection:bg-white dark:selection:text-zinc-950 transition-colors duration-200`}>
-				<Navbar locale={locale} />
-				<div className='flex-1'>{children}</div>
-				<Footer />
+				<ToastProvider>
+					<Navbar locale={locale} />
+					<div className='flex-1'>{children}</div>
+					<Footer />
+				</ToastProvider>
 			</body>
 		</html>
 	)

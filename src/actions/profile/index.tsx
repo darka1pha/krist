@@ -63,6 +63,83 @@ export const addNewAddressAction = async (formData: FormData) => {
 	}
 }
 
+export const saveAddressAction = async (addressData: {
+	name: string
+	phone: string
+	state: string
+	city: string
+	details: string
+}) => {
+	'use server'
+	const supabase = await createClient()
+	const {
+		data: { user },
+	} = await supabase.auth.getUser()
+
+	if (!user) throw new Error('You must be signed in to add an address.')
+
+	const { data, error } = await supabase
+		.from('addresses')
+		.insert({
+			name: addressData.name.trim(),
+			phone: addressData.phone.trim(),
+			state: addressData.state.trim(),
+			city: addressData.city.trim(),
+			details: addressData.details.trim(),
+			user_id: user.id,
+			created_at: new Date().toISOString(),
+		})
+		.select('*')
+		.single()
+
+	if (error) {
+		throw new Error(error.message || 'Failed to save address')
+	}
+
+	// Keep profile address synced if empty
+	const { data: profile } = await supabase
+		.from('profiles')
+		.select('address')
+		.eq('id', user.id)
+		.maybeSingle()
+
+	if (!profile?.address || !profile.address.trim()) {
+		await supabase
+			.from('profiles')
+			.update({
+				address: `${addressData.details}, ${addressData.city}, ${addressData.state}`,
+			})
+			.eq('id', user.id)
+	}
+
+	revalidatePath('/cart')
+	revalidatePath('/profile/addresses')
+	revalidatePath('/profile')
+
+	return data
+}
+
+export const deleteAddressAction = async (id: number) => {
+	'use server'
+	const supabase = await createClient()
+	const {
+		data: { user },
+	} = await supabase.auth.getUser()
+
+	if (!user) throw new Error('Unauthorized')
+
+	const { error } = await supabase
+		.from('addresses')
+		.delete()
+		.eq('id', id)
+		.eq('user_id', user.id)
+
+	if (error) throw new Error(error.message)
+
+	revalidatePath('/profile/addresses')
+	revalidatePath('/cart')
+}
+
 export const favoriteAction = async (formData: FormData) => {
 	const supabase = await createClient()
 	const {

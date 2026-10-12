@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	images: {
+		unoptimized: true,
 		remotePatterns: [
 			{ hostname: 'eqzhxlsoptcmlohjlbpc.supabase.co', protocol: 'https' },
 			{ hostname: 'swavffutisgneenuzdoh.supabase.co', protocol: 'https' },
@@ -9,9 +10,6 @@ const nextConfig = {
 	experimental: {
 		optimizePackageImports: ['lucide-react'],
 	},
-	images: {
-		unoptimized: true
-	}
 }
 
 module.exports = nextConfig

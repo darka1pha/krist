@@ -126,7 +126,11 @@ const Details = async ({
 
 			{/* Actions */}
 			<div className='pt-2'>
-				<AddToCart user={user} liked={likeStatus?.liked} />
+				<AddToCart
+					user={user}
+					liked={likeStatus?.liked}
+					productName={product?.name}
+				/>
 			</div>
 
 			{/* Trust Badges */}

@@ -1,10 +1,10 @@
-import { SubmitButton } from '@/components/elements'
 import CartItem from '@/components/elements/cartItem'
 import Header from '@/components/elements/cartItem/header'
+import CheckoutButton from '@/components/cart/checkoutButton'
 import { createClient } from '@/utils/supabase/server'
 import { cache } from 'react'
 import Link from 'next/link'
-import { ShoppingBag, ArrowRight } from 'lucide-react'
+import { ShoppingBag, ArrowRight, MapPin, AlertCircle } from 'lucide-react'
 
 interface CartProduct {
 	name: string
@@ -46,6 +46,30 @@ const getShoppingCart = cache(async () => {
 })
 
 const CartPage = async () => {
+	const supabase = await createClient()
+	const {
+		data: { user },
+	} = await supabase.auth.getUser()
+
+	let addresses: any[] = []
+	let profile: any = null
+
+	if (user) {
+		const { data: userAddrs } = await supabase
+			.from('addresses')
+			.select('*')
+			.eq('user_id', user.id)
+			.order('created_at', { ascending: false })
+		addresses = userAddrs || []
+
+		const { data: prof } = await supabase
+			.from('profiles')
+			.select('*')
+			.eq('id', user.id)
+			.maybeSingle()
+		profile = prof
+	}
+
 	const data = await getCartItems()
 	const cart = await getShoppingCart()
 
@@ -132,6 +156,43 @@ const CartPage = async () => {
 									<span className='text-emerald-600 font-medium'>Calculated at checkout</span>
 								</div>
 							</div>
+							{/* Delivery destination preview */}
+							<div className='py-4 border-b border-gray-100 dark:border-zinc-800 text-xs'>
+								<span className='font-bold text-gray-500 uppercase tracking-wider block text-[10px] mb-2'>
+									Shipping Destination
+								</span>
+								{addresses.length > 0 ? (
+									<div className='flex items-start gap-2.5 p-3 rounded-xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200/70 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200'>
+										<MapPin size={15} className='text-emerald-500 shrink-0 mt-0.5' />
+										<div className='space-y-0.5 flex-1 min-w-0'>
+											<p className='font-bold text-zinc-950 dark:text-white truncate'>
+												{addresses[0].name}
+											</p>
+											<p className='text-zinc-500 dark:text-zinc-400 truncate text-[11px]'>
+												{addresses[0].details}, {addresses[0].city}
+											</p>
+										</div>
+									</div>
+								) : profile?.address ? (
+									<div className='flex items-start gap-2.5 p-3 rounded-xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200/70 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200'>
+										<MapPin size={15} className='text-emerald-500 shrink-0 mt-0.5' />
+										<div className='space-y-0.5 flex-1 min-w-0'>
+											<p className='font-bold text-zinc-950 dark:text-white truncate'>
+												{profile.name || 'Account Address'}
+											</p>
+											<p className='text-zinc-500 dark:text-zinc-400 truncate text-[11px]'>
+												{profile.address}
+											</p>
+										</div>
+									</div>
+								) : (
+									<div className='flex items-center gap-2 p-3 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/50 text-amber-800 dark:text-amber-300 font-medium text-[11px]'>
+										<AlertCircle size={15} className='text-amber-600 dark:text-amber-400 shrink-0' />
+										<span>No address found (required for order)</span>
+									</div>
+								)}
+							</div>
+
 							<div className='flex items-center justify-between py-4 text-base font-bold'>
 								<span>Total Amount</span>
 								<span className='text-xl font-extrabold'>
@@ -139,16 +200,19 @@ const CartPage = async () => {
 								</span>
 							</div>
 
-							<form className='w-full mt-4'>
-								<input
-									name='total_price'
-									type='hidden'
-									value={grandTotal.toFixed(2)}
+							<div className='w-full mt-4'>
+								<CheckoutButton
+									grandTotal={grandTotal}
+									subtotal={subtotal}
+									deliveryCharge={deliveryCharge}
+									itemsCount={data.length}
+									initialAddresses={addresses}
+									profileAddress={profile?.address}
+									userName={profile?.name || (user?.user_metadata as any)?.name}
+									userEmail={user?.email}
+									isLoggedIn={Boolean(user)}
 								/>
-								<SubmitButton className='btn-primary w-full py-3.5 font-semibold text-center'>
-									Proceed To Checkout
-								</SubmitButton>
-							</form>
+							</div>
 
 							<p className='text-xs text-center text-gray-400 mt-4'>
 								🔒 Secure 256-bit SSL encrypted checkout

@@ -28,7 +28,7 @@ const Favorites = async () => {
 	const favorites = await getFavorites()
 
 	return (
-		<div className='col-span-12 md:col-span-8 xl:col-span-9'>
+		<div className='w-full'>
 			<div className='flex items-center justify-between pb-4 border-b border-gray-100 dark:border-zinc-800 mb-6'>
 				<div>
 					<h1 className='text-3xl font-extrabold tracking-tight'>Wishlist</h1>

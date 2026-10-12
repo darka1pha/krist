@@ -1,4 +1,5 @@
 import { Menu } from '@/components/profile'
+import ProfileTabTransition from '@/components/profile/tabTransition'
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 
@@ -20,9 +21,9 @@ const ProfileLayout = async ({
 
 	return (
 		<main className='paddings max-w-7xl mx-auto'>
-			<div className='grid gap-6 grid-cols-12 w-full'>
+			<div className='grid gap-8 grid-cols-12 w-full items-start'>
 				<Menu locale={locale} />
-				{children}
+				<ProfileTabTransition>{children}</ProfileTabTransition>
 			</div>
 		</main>
 	)

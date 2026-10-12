@@ -48,7 +48,7 @@ const sampleOrders = [
 
 const Orders = () => {
 	return (
-		<div className='col-span-12 md:col-span-8 xl:col-span-9'>
+		<div className='w-full'>
 			{/* Header */}
 			<div className='flex items-center justify-between pb-4 border-b border-gray-100 dark:border-zinc-800 mb-6'>
 				<div>
