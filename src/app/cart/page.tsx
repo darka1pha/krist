@@ -49,7 +49,11 @@ const CartPage = async () => {
 	const data = await getCartItems()
 	const cart = await getShoppingCart()
 
-	const subtotal = cart?.total_price || 0
+	const calculatedSubtotal = data.reduce(
+		(sum, item) => sum + (item.products?.price || 0) * item.qty,
+		0
+	)
+	const subtotal = calculatedSubtotal > 0 ? calculatedSubtotal : (cart?.total_price || 0)
 	const deliveryCharge = data.length > 0 ? 20 : 0
 	const grandTotal = data.length > 0 ? subtotal + deliveryCharge : 0
 

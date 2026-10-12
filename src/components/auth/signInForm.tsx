@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { signInAction } from '@/actions/auth/sign-in'
 import { SubmitButton } from '@/components/elements'
-import { Eye, EyeOff, AlertCircle } from 'lucide-react'
+import { Eye, EyeOff, AlertCircle, Mail, Lock } from 'lucide-react'
 import Link from 'next/link'
 
 interface SignInFormProps {
@@ -58,15 +58,20 @@ export default function SignInForm({ redirect, labels }: SignInFormProps) {
 						className='block text-xs font-medium text-zinc-700 dark:text-zinc-300'>
 						{labels.email}
 					</label>
-					<input
-						id='email'
-						name='email'
-						type='email'
-						autoComplete='email'
-						required
-						placeholder={labels.emailPlaceholder}
-						className='w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white transition-all text-sm'
-					/>
+					<div className='relative'>
+						<div className='absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400'>
+							<Mail size={16} />
+						</div>
+						<input
+							id='email'
+							name='email'
+							type='email'
+							autoComplete='email'
+							required
+							placeholder={labels.emailPlaceholder}
+							className='w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white transition-all text-sm'
+						/>
+					</div>
 				</div>
 
 				{/* Password */}
@@ -84,6 +89,9 @@ export default function SignInForm({ redirect, labels }: SignInFormProps) {
 						</Link>
 					</div>
 					<div className='relative'>
+						<div className='absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400'>
+							<Lock size={16} />
+						</div>
 						<input
 							id='password'
 							name='password'
@@ -91,7 +99,7 @@ export default function SignInForm({ redirect, labels }: SignInFormProps) {
 							autoComplete='current-password'
 							required
 							placeholder='••••••••••••'
-							className='w-full px-3.5 py-2.5 pr-10 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white transition-all text-sm'
+							className='w-full pl-10 pr-10 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-white transition-all text-sm'
 						/>
 						<button
 							type='button'

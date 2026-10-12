@@ -4,12 +4,14 @@ import Link from 'next/link'
 
 const CartIcon = async () => {
 	const supabase = await createClient()
-	const { data } = await supabase
-		.from('shopping_cart')
-		.select('item_count')
-		.maybeSingle()
+	// Query cart items count directly for accuracy
+	const { data: cartItems } = await supabase
+		.from('cart_items')
+		.select('qty')
 
-	const itemCount = data?.item_count || 0
+	const itemCount = cartItems
+		? cartItems.reduce((acc, item) => acc + (item.qty || 1), 0)
+		: 0
 
 	return (
 		<Link

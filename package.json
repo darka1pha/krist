@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "db:check": "node scripts/seed.mjs",
-    "seed": "node scripts/seed.mjs"
+    "seed": "node scripts/seed.mjs",
+    "test:user": "node scripts/test_user.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
