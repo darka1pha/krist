@@ -1,1 +1,66 @@
-export * from '@/lib/supabase/server'
+import { createServerClient } from '@supabase/ssr'
+import { cookies } from 'next/headers'
+import { Database } from '@/types/supabase'
+
+const supabaseUrl =
+	process.env.NEXT_PUBLIC_SUPABASE_URL ||
+	'https://eqzhxlsoptcmlohjlbpc.supabase.co'
+const supabaseKey =
+	process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+	process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+	'sb_publishable_xlGFqGc5wXP58OCJIKYxvw_T5gS3NFX'
+
+export function createClient(
+	cookieStore: Awaited<ReturnType<typeof cookies>>
+): ReturnType<typeof createServerClient<Database>>
+export function createClient(): Promise<
+	ReturnType<typeof createServerClient<Database>>
+>
+export function createClient(
+	cookieStore?: Awaited<ReturnType<typeof cookies>>
+):
+	| ReturnType<typeof createServerClient<Database>>
+	| Promise<ReturnType<typeof createServerClient<Database>>> {
+	if (cookieStore) {
+		return createServerClient<Database>(supabaseUrl!, supabaseKey!, {
+			cookies: {
+				getAll() {
+					return cookieStore.getAll()
+				},
+				setAll(cookiesToSet) {
+					try {
+						cookiesToSet.forEach(({ name, value, options }) =>
+							cookieStore.set(name, value, options)
+						)
+					} catch {
+						// The `setAll` method was called from a Server Component.
+						// This can be ignored if you have middleware refreshing
+						// user sessions.
+					}
+				},
+			},
+		})
+	}
+
+	return (async () => {
+		const store = await cookies()
+		return createServerClient<Database>(supabaseUrl!, supabaseKey!, {
+			cookies: {
+				getAll() {
+					return store.getAll()
+				},
+				setAll(cookiesToSet) {
+					try {
+						cookiesToSet.forEach(({ name, value, options }) =>
+							store.set(name, value, options)
+						)
+					} catch {
+						// The `setAll` method was called from a Server Component.
+						// This can be ignored if you have middleware refreshing
+						// user sessions.
+					}
+				},
+			},
+		})
+	})()
+}

@@ -2,228 +2,165 @@ import { Tables } from '@/types/supabase'
 import { createClient } from '@/utils/supabase/server'
 import { cache } from 'react'
 
-export const fallbackProducts: Tables<'products'>[] = [
-	{
-		id: 1,
-		name: 'Aura Silk Satin Clutch',
-		brand: 'Krist Atelier',
-		price: 185.0,
-		description: 'Crafted from lustrous silk satin with champagne gold hardware and an optional delicate chain strap.',
-		rating: 4.9,
-		category: 1,
-		colors: ['#000000', '#d4af37', '#e2e8f0'],
-		size: ['M'],
-		images: ['/images/hero.webp', '/images/signin.webp'],
-		created_at: new Date().toISOString(),
-	},
-	{
-		id: 2,
-		name: 'Sculptural Gold Pendant Necklace',
-		brand: 'Élégance',
-		price: 240.0,
-		description: 'Hand-finished 18k gold vermeil pendant on an adjustable Venetian link chain.',
-		rating: 4.8,
-		category: 1,
-		colors: ['#d4af37', '#silver'],
-		size: ['L'],
-		images: ['/images/signin.webp', '/images/hero.webp'],
-		created_at: new Date().toISOString(),
-	},
-	{
-		id: 3,
-		name: 'Monochrome Cashmere Stole',
-		brand: 'Krist Atelier',
-		price: 195.0,
-		description: 'Ultra-fine Grade-A Mongolian cashmere with delicate eyelash fringe edges.',
-		rating: 5.0,
-		category: 2,
-		colors: ['#18181b', '#71717a'],
-		size: ['XL'],
-		images: ['/images/signup.webp', '/images/hero.webp'],
-		created_at: new Date().toISOString(),
-	},
-	{
-		id: 4,
-		name: 'Minimalist Italian Leather Tote',
-		brand: 'Sartorial',
-		price: 360.0,
-		description: 'Full-grain Tuscan calfskin leather with suede lining and detachable organizer pouch.',
-		rating: 4.9,
-		category: 3,
-		colors: ['#3f2e21', '#18181b'],
-		size: ['L'],
-		images: ['/images/hero.webp', '/images/signup.webp'],
-		created_at: new Date().toISOString(),
-	},
-	{
-		id: 5,
-		name: 'Diamond Pavé Signet Ring',
-		brand: 'Élégance',
-		price: 290.0,
-		description: 'Modern silhouette pavé set with ethically sourced lab diamonds in 14k solid white gold.',
-		rating: 4.7,
-		category: 1,
-		colors: ['#e2e8f0', '#d4af37'],
-		size: ['S', 'M'],
-		images: ['/images/signin.webp', '/images/hero.webp'],
-		created_at: new Date().toISOString(),
-	},
-	{
-		id: 6,
-		name: 'Architectural Acetate Sunglasses',
-		brand: 'Krist Eyewear',
-		price: 175.0,
-		description: 'Handcrafted Japanese acetate frames with 100% UVA/UVB Carl Zeiss polarized lenses.',
-		rating: 4.8,
-		category: 2,
-		colors: ['#18181b', '#854d0e'],
-		size: ['M'],
-		images: ['/images/signup.webp', '/images/signin.webp'],
-		created_at: new Date().toISOString(),
-	},
-]
+export interface ExtendedProduct extends Tables<'products'> {
+	subcategory?: number
+	subcategory_name?: string
+}
 
-export const fallbackCategories = [
-	{
-		id: 1,
-		name: 'Jewelry',
-		poster_url: '/images/signin.webp',
-		created_at: new Date().toISOString(),
-		subcategories: [
-			{ id: 101, name: 'Necklaces', category: 1, poster_url: '/images/signin.webp', created_at: '' },
-			{ id: 102, name: 'Rings', category: 1, poster_url: '/images/signin.webp', created_at: '' },
-		],
-	},
-	{
-		id: 2,
-		name: 'Accessories',
-		poster_url: '/images/hero.webp',
-		created_at: new Date().toISOString(),
-		subcategories: [
-			{ id: 201, name: 'Scarves', category: 2, poster_url: '/images/hero.webp', created_at: '' },
-			{ id: 202, name: 'Eyewear', category: 2, poster_url: '/images/hero.webp', created_at: '' },
-		],
-	},
-	{
-		id: 3,
-		name: 'Handbags',
-		poster_url: '/images/signup.webp',
-		created_at: new Date().toISOString(),
-		subcategories: [
-			{ id: 301, name: 'Totes', category: 3, poster_url: '/images/signup.webp', created_at: '' },
-			{ id: 302, name: 'Clutches', category: 3, poster_url: '/images/signup.webp', created_at: '' },
-		],
-	},
-]
+export interface CategoryWithSubs {
+	id: number
+	name: string
+	poster_url: string | null
+	description?: string | null
+	subcategories: Tables<'subcategories'>[]
+}
 
+// Fallback arrays kept empty as per requirement: data should be read from DB only
+export const fallbackProducts: ExtendedProduct[] = []
+export const fallbackCategories: CategoryWithSubs[] = []
+
+/**
+ * Fetch products strictly from Supabase DB.
+ * Handles optional category and subcategory filtering.
+ */
 export const getProducts = cache(
 	async ({
 		searchParams,
 	}: {
 		searchParams: { [key: string]: string | string[] | undefined }
-	}) => {
+	}): Promise<Tables<'products'>[]> => {
 		'use server'
+		const categoryParam =
+			typeof searchParams.category === 'string'
+				? searchParams.category.trim()
+				: undefined
+		const subParam =
+			typeof searchParams.sub === 'string'
+				? searchParams.sub.trim()
+				: undefined
+
 		try {
 			const supabase = await createClient()
 
-			const categoryParam =
-				typeof searchParams.category === 'string'
-					? searchParams.category
-					: undefined
-			const subParam =
-				typeof searchParams.sub === 'string' ? searchParams.sub : undefined
+			if (categoryParam) {
+				const filterCategoryNames = categoryParam
+					.split(',')
+					.map((c) => c.trim().toLowerCase())
 
-			if (categoryParam && !subParam) {
-				const filterCategories = categoryParam.split(',')
-				const { data: categories } = await supabase
+				// Query categories from database
+				const { data: allCategories, error: catError } = await supabase
 					.from('categories')
-					.select('id')
-					.in('name', filterCategories)
-				const categoriesId = categories?.map((c) => c.id) ?? []
+					.select('id, name')
 
-				const { data: subcategories } = await supabase
-					.from('subcategories')
-					.select('id')
-					.in('category', categoriesId)
+				if (catError) {
+					console.error('Error fetching categories from database:', catError)
+					return []
+				}
 
-				const subcategoriesId = subcategories?.map((s) => s.id) ?? []
+				const matchedCategories = (allCategories || []).filter(
+					(c) => c.name && filterCategoryNames.includes(c.name.toLowerCase())
+				)
+				const matchedCategoryIds = matchedCategories.map((c) => c.id)
 
-				const { data } = await supabase
-					.from('products')
-					.select('*')
-					.in('category', subcategoriesId)
-
-				if (data && data.length > 0) return data
-			} else if (categoryParam && subParam) {
-				const { data: category } = await supabase
-					.from('categories')
-					.select('id')
-					.eq('name', categoryParam)
-					.maybeSingle()
-
-				if (category) {
-					const { data: subcategory } = await supabase
+				if (matchedCategoryIds.length > 0) {
+					const { data: subcategories, error: subError } = await supabase
 						.from('subcategories')
-						.select('id')
-						.eq('category', category.id)
-						.eq('name', subParam)
-						.maybeSingle()
+						.select('id, name, category')
+						.in('category', matchedCategoryIds)
 
-					if (subcategory) {
-						const { data } = await supabase
+					if (subError) {
+						console.error('Error fetching subcategories from database:', subError)
+						return []
+					}
+
+					let targetSubcategoryIds: number[] = []
+
+					if (subParam) {
+						const subLower = subParam.toLowerCase()
+						targetSubcategoryIds = (subcategories || [])
+							.filter((s) => s.name && s.name.toLowerCase() === subLower)
+							.map((s) => s.id)
+					} else {
+						targetSubcategoryIds = (subcategories || []).map((s) => s.id)
+					}
+
+					if (targetSubcategoryIds.length > 0) {
+						const { data: products, error: prodError } = await supabase
 							.from('products')
 							.select('*')
-							.eq('category', subcategory.id)
+							.in('category', targetSubcategoryIds)
+							.order('id', { ascending: true })
 
-						if (data && data.length > 0) return data
+						if (prodError) {
+							console.error('Error fetching filtered products from database:', prodError)
+							return []
+						}
+
+						return products || []
 					}
+
+					return []
 				}
-			} else {
-				const { data } = await supabase.from('products').select('*')
-				if (data && data.length > 0) return data
+
+				return []
 			}
+
+			// Return all products directly from database
+			const { data, error } = await supabase
+				.from('products')
+				.select('*')
+				.order('id', { ascending: true })
+
+			if (error) {
+				console.error('Error fetching products from database:', error)
+				return []
+			}
+
+			return data || []
 		} catch (e) {
-			console.warn('Supabase products fetch fallback:', e)
+			console.error('Supabase getProducts exception:', e)
+			return []
 		}
-
-		// Fallback for seamless UX
-		const categoryParam =
-			typeof searchParams.category === 'string'
-				? searchParams.category.toLowerCase()
-				: undefined
-		if (categoryParam) {
-			const matched = fallbackCategories.find((c) => c.name.toLowerCase() === categoryParam)
-			if (matched) {
-				return fallbackProducts.filter((p) => p.category === matched.id)
-			}
-		}
-
-		return fallbackProducts
 	}
 )
 
-export const getCategories = cache(async () => {
+/**
+ * Fetch categories and their nested subcategories strictly from Supabase DB.
+ */
+export const getCategories = cache(async (): Promise<{
+	data: CategoryWithSubs[]
+	error: any
+}> => {
 	try {
 		const supabase = await createClient()
 
 		const { data: categories, error: categoryError } = await supabase
 			.from('categories')
 			.select('*')
+			.order('id', { ascending: true })
+
 		const { data: subcategories, error: subError } = await supabase
 			.from('subcategories')
 			.select('*')
+			.order('id', { ascending: true })
+
+		if (categoryError) {
+			console.error('Error fetching categories from database:', categoryError)
+		}
 
 		if (categories && categories.length > 0) {
-			type SubcategoryRow = Tables<'subcategories'>
-			interface CategoryWithSubs {
-				name: string | null
-				id: number
-				subcategories: SubcategoryRow[]
-			}
-
 			const result: CategoryWithSubs[] = categories.map((cat) => ({
 				id: cat.id,
-				name: cat.name,
+				name: cat.name || '',
+				poster_url: cat.poster_url || null,
+				description:
+					cat.name?.toLowerCase() === 'jewelry'
+						? 'Bespoke 18k gold vermeil, sculptural silhouettes, and brilliant lab-grown diamond accents.'
+						: cat.name?.toLowerCase() === 'accessories'
+						? 'Grade-A Mongolian cashmere stoles, Japanese acetate eyewear, and timeless personal styling accents.'
+						: cat.name?.toLowerCase() === 'handbags'
+						? 'Tuscan full-grain leather totes, lustrous satin evening clutches, and structured modern silhouettes.'
+						: 'Curated luxury collection.',
 				subcategories: (subcategories ?? []).filter(
 					(sub) => sub.category === cat.id
 				),
@@ -231,15 +168,70 @@ export const getCategories = cache(async () => {
 
 			return {
 				data: result,
-				error: categoryError ? categoryError : subError ? subError : null,
+				error: categoryError || subError || null,
 			}
 		}
-	} catch (e) {
-		console.warn('Supabase categories fetch fallback:', e)
-	}
 
-	return {
-		data: fallbackCategories,
-		error: null,
+		return {
+			data: [],
+			error: categoryError || subError || null,
+		}
+	} catch (e) {
+		console.error('Supabase getCategories exception:', e)
+		return {
+			data: [],
+			error: e,
+		}
 	}
 })
+
+/**
+ * Get category by its slug name strictly from Supabase DB.
+ */
+export const getCategoryBySlug = cache(async (slug: string) => {
+	const normalizedSlug = decodeURIComponent(slug).trim().toLowerCase()
+	const categoriesRes = await getCategories()
+	const categories = categoriesRes.data || []
+
+	return (
+		categories.find(
+			(cat) => cat.name?.toLowerCase() === normalizedSlug
+		) || null
+	)
+})
+
+/**
+ * Resolve the parent category and subcategory for a product from the database.
+ */
+export const getCategoryForProduct = cache(
+	async (product: Tables<'products'> | null) => {
+		if (!product) return null
+		const categoriesRes = await getCategories()
+		const categories = categoriesRes.data || []
+
+		// Product.category references subcategories.id
+		for (const cat of categories) {
+			const sub = cat.subcategories?.find((s) => s.id === product.category)
+			if (sub) {
+				return {
+					category: cat,
+					subcategory: sub,
+				}
+			}
+		}
+
+		// Direct category ID match fallback
+		const directCat = categories.find((c) => c.id === product.category)
+		if (directCat) {
+			return {
+				category: directCat,
+				subcategory: null,
+			}
+		}
+
+		return {
+			category: categories[0] || null,
+			subcategory: null,
+		}
+	}
+)

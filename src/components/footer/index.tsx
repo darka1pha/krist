@@ -67,23 +67,28 @@ const Footer = () => {
 						</h4>
 						<ul className='space-y-2.5 text-gray-500'>
 							<li>
+								<Link href='/categories' className='hover:text-black dark:hover:text-white transition-colors'>
+									All Categories
+								</Link>
+							</li>
+							<li>
+								<Link href='/categories/jewelry' className='hover:text-black dark:hover:text-white transition-colors'>
+									Fine Jewelry
+								</Link>
+							</li>
+							<li>
+								<Link href='/categories/handbags' className='hover:text-black dark:hover:text-white transition-colors'>
+									Designer Handbags
+								</Link>
+							</li>
+							<li>
+								<Link href='/categories/accessories' className='hover:text-black dark:hover:text-white transition-colors'>
+									Modern Accessories
+								</Link>
+							</li>
+							<li>
 								<Link href='/products' className='hover:text-black dark:hover:text-white transition-colors'>
-									All Products
-								</Link>
-							</li>
-							<li>
-								<Link href='/products?category=jewelry' className='hover:text-black dark:hover:text-white transition-colors'>
-									Jewelry
-								</Link>
-							</li>
-							<li>
-								<Link href='/products?category=handbags' className='hover:text-black dark:hover:text-white transition-colors'>
-									Handbags
-								</Link>
-							</li>
-							<li>
-								<Link href='/products?category=accessories' className='hover:text-black dark:hover:text-white transition-colors'>
-									Accessories
+									Complete Catalog
 								</Link>
 							</li>
 						</ul>

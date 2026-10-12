@@ -3,38 +3,17 @@ import initTranslations from './i18n'
 import Hero from '@/components/hero'
 import CardsSlider from '@/components/cardsSlider'
 import CardsGrid from '@/components/cardsGrid'
-import { createClient } from '@/utils/supabase/server'
 import ProductCard from '@/components/elements/productCard'
-import { cache } from 'react'
 import { Sparkles, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
-import { fallbackCategories, fallbackProducts } from '@/actions/pdoducts'
+import {
+	getCategories,
+	getProducts,
+} from '@/actions/pdoducts'
 
 export const dynamic = 'force-dynamic'
 
 const i18nNamespaces = ['home']
-
-const getProducts = cache(async () => {
-	try {
-		const supabase = await createClient()
-		const { data } = await supabase.from('products').select('*').limit(8)
-		if (data && data.length > 0) return data
-	} catch (e) {
-		console.warn('Database fetch fallback:', e)
-	}
-	return fallbackProducts
-})
-
-const getCategories = cache(async () => {
-	try {
-		const supabase = await createClient()
-		const { data } = await supabase.from('categories').select('*')
-		if (data && data.length > 0) return data
-	} catch (e) {
-		console.warn('Database fetch fallback:', e)
-	}
-	return fallbackCategories
-})
 
 export default async function Home({
 	params,
@@ -44,8 +23,10 @@ export default async function Home({
 	const resolvedParams = params ? await params : undefined
 	const locale = resolvedParams?.locale || 'en'
 	const { t, resources } = await initTranslations(locale, i18nNamespaces)
-	const categories = await getCategories()
-	const products = await getProducts()
+	const categoriesRes = await getCategories()
+	const categories = categoriesRes?.data || []
+	const productsData = await getProducts({ searchParams: {} })
+	const products = Array.isArray(productsData) ? productsData : []
 
 	return (
 		<TranslationsProvider
@@ -74,14 +55,23 @@ export default async function Home({
 							href='/products'
 							className='group inline-flex items-center gap-2 text-sm font-semibold hover:text-primary-400 transition-colors'>
 							<span>View All Products</span>
-							<ArrowRight size={16} className='group-hover:translate-x-1 transition-transform' />
+							<ArrowRight
+								size={16}
+								className='group-hover:translate-x-1 transition-transform'
+							/>
 						</Link>
 					</div>
 
 					<CardsGrid>
-						{products?.map((product) => (
-							<ProductCard key={product.id} product={product} />
-						))}
+						{products.length > 0 ? (
+							products.map((product) => (
+								<ProductCard key={product.id} product={product} />
+							))
+						) : (
+							<div className='col-span-full py-16 text-center text-zinc-500 dark:text-zinc-400 bg-zinc-50 dark:bg-zinc-900/50 rounded-2xl border border-dashed border-zinc-200 dark:border-zinc-800'>
+								<p className='text-sm font-medium'>No products found in the database catalog.</p>
+							</div>
+						)}
 					</CardsGrid>
 				</section>
 			</main>

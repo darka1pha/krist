@@ -3,10 +3,35 @@ import { Container, Filter } from '@/components/products'
 import { CategoriesProps } from '@/types'
 import { Metadata } from 'next'
 
-export const metadata: Metadata = {
-	title: 'Products Collection | Krist',
-	description:
-		"Explore the diverse world of accessories at Krist - statement jewelry to chic handbags, discover curated fashion-forward choices that cater to every taste.",
+export async function generateMetadata({
+	searchParams,
+}: {
+	searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}): Promise<Metadata> {
+	const resolvedSearchParams = (await searchParams) || {}
+	const category =
+		typeof resolvedSearchParams.category === 'string'
+			? resolvedSearchParams.category
+			: undefined
+	const sub =
+		typeof resolvedSearchParams.sub === 'string'
+			? resolvedSearchParams.sub
+			: undefined
+
+	if (category) {
+		const capCat = category.charAt(0).toUpperCase() + category.slice(1)
+		const capSub = sub ? ` - ${sub.charAt(0).toUpperCase() + sub.slice(1)}` : ''
+		return {
+			title: `${capCat}${capSub} Collection | Krist`,
+			description: `Explore our curated selection of luxury ${category}. High handcrafted quality and timeless elegance.`,
+		}
+	}
+
+	return {
+		title: 'Products Collection | Krist',
+		description:
+			'Explore the diverse world of accessories at Krist - statement jewelry to chic handbags, discover curated fashion-forward choices that cater to every taste.',
+	}
 }
 
 const Products = async ({
@@ -39,7 +64,13 @@ const Products = async ({
 	return (
 		<main className='max-w-7xl mx-auto grid grid-cols-12 gap-6 min-h-screen paddings'>
 			<Filter categories={categories || []} />
-			<Container products={products || []} />
+			<Container
+				products={products || []}
+				activeFilters={{
+					category: normalizedSearchParams.category,
+					sub: normalizedSearchParams.sub,
+				}}
+			/>
 		</main>
 	)
 }

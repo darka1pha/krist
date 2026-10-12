@@ -4,6 +4,7 @@ import SizePicker from '../sizePicker'
 import { createClient } from '@/utils/supabase/server'
 import { Star, ShieldCheck, Truck, RefreshCw, CheckCircle2 } from 'lucide-react'
 import Link from 'next/link'
+import { getCategoryForProduct } from '@/actions/pdoducts'
 
 const Details = async ({
 	product,
@@ -21,6 +22,7 @@ const Details = async ({
 		data: { user },
 	} = await supabase.auth.getUser()
 
+	const categoryInfo = await getCategoryForProduct(product)
 	const rating = product?.rating || 4.8
 	const price = product?.price || 0
 	const originalPrice = (price * 1.25).toFixed(2)
@@ -28,14 +30,24 @@ const Details = async ({
 	return (
 		<div className='flex flex-col gap-6 px-4 md:px-0'>
 			{/* Breadcrumbs */}
-			<div className='flex items-center gap-2 text-xs text-gray-500'>
+			<div className='flex items-center gap-2 text-xs text-gray-500 flex-wrap'>
 				<Link href='/' className='hover:underline'>
 					Home
 				</Link>
 				<span>/</span>
-				<Link href='/products' className='hover:underline'>
-					Products
+				<Link href='/categories' className='hover:underline'>
+					Categories
 				</Link>
+				{categoryInfo?.category && (
+					<>
+						<span>/</span>
+						<Link
+							href={`/categories/${encodeURIComponent(categoryInfo.category.name.toLowerCase())}`}
+							className='hover:underline capitalize font-medium text-zinc-700 dark:text-zinc-300'>
+							{categoryInfo.category.name}
+						</Link>
+					</>
+				)}
 				<span>/</span>
 				<span className='text-zinc-900 dark:text-zinc-100 font-medium truncate max-w-[200px]'>
 					{product?.name}
@@ -44,8 +56,17 @@ const Details = async ({
 
 			{/* Header info */}
 			<div>
-				<div className='inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 mb-2'>
-					{product?.brand}
+				<div className='flex items-center gap-2 mb-2'>
+					<span className='inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100'>
+						{product?.brand}
+					</span>
+					{categoryInfo?.category && (
+						<Link
+							href={`/categories/${encodeURIComponent(categoryInfo.category.name.toLowerCase())}`}
+							className='inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-amber-500/10 text-amber-700 dark:text-amber-400 hover:bg-amber-500/20 transition-colors'>
+							{categoryInfo.category.name}
+						</Link>
+					)}
 				</div>
 				<h1 className='text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white'>
 					{product?.name}

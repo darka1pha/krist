@@ -2,8 +2,9 @@
 
 import ListItem from './listItem'
 import { CategoriesProps } from '@/types'
-import { Filter as FilterIcon, X } from 'lucide-react'
+import { Filter as FilterIcon, X, Compass } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import Link from 'next/link'
 
 const ProductsCategory = ({
 	categories,
@@ -31,7 +32,7 @@ const ProductsCategory = ({
 					<button
 						type='button'
 						onClick={clearFilters}
-						className='text-xs font-medium text-red-500 hover:text-red-700 flex items-center gap-1 transition-colors'>
+						className='text-xs font-semibold text-red-500 hover:text-red-700 dark:hover:text-red-400 flex items-center gap-1 transition-colors cursor-pointer'>
 						<X size={12} /> Clear
 					</button>
 				)}
@@ -39,9 +40,18 @@ const ProductsCategory = ({
 
 			<nav aria-label='Categories filter' className='space-y-1'>
 				{categories.map((category) => (
-					<ListItem key={category.name} category={category} />
+					<ListItem key={category.id || category.name} category={category} />
 				))}
 			</nav>
+
+			<div className='mt-4 pt-3 border-t border-gray-100 dark:border-zinc-800'>
+				<Link
+					href='/categories'
+					className='inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors'>
+					<Compass size={13} />
+					<span>Explore Full Department Gallery</span>
+				</Link>
+			</div>
 		</div>
 	)
 }

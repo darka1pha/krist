@@ -6,6 +6,8 @@ import CartIcon from '../elements/cartIcon'
 import { createClient } from '@/lib/supabase/server'
 import DarkModeSwitch from '../theme/darkModeSwitch'
 import { Heart, Search } from 'lucide-react'
+import CategoriesMenu from './categoriesMenu'
+import MobileNav from './mobileNav'
 
 const i18nNamespaces = ['navbar']
 
@@ -19,7 +21,7 @@ const Navbar = async ({ locale }: { locale: string }) => {
 	return (
 		<header className='sticky top-0 z-50 w-full bg-white/85 dark:bg-zinc-950/85 backdrop-blur-md border-b border-gray-100 dark:border-zinc-800/80 transition-colors'>
 			<nav className='max-w-7xl mx-auto flex h-20 items-center justify-between px-4 sm:px-6 lg:px-8'>
-				{/* Logo */}
+				{/* Logo & Main Nav */}
 				<div className='flex items-center gap-8'>
 					<Link href='/' className='flex items-center gap-2 group'>
 						<div className='relative h-9 w-24 transition-transform group-hover:scale-105'>
@@ -39,8 +41,11 @@ const Navbar = async ({ locale }: { locale: string }) => {
 							<Link
 								href='/'
 								className='text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors'>
-								Home
+								{t('home') || 'Home'}
 							</Link>
+						</li>
+						<li>
+							<CategoriesMenu label={t('categories') || 'Categories'} />
 						</li>
 						<li>
 							<Link
@@ -85,6 +90,9 @@ const Navbar = async ({ locale }: { locale: string }) => {
 
 					{/* Auth Button */}
 					<AuthButton user={user} locale={locale || 'en'} />
+
+					{/* Mobile Menu */}
+					<MobileNav />
 				</div>
 			</nav>
 		</header>

@@ -3,7 +3,10 @@ import { Tables } from './supabase'
 // npx supabase gen types typescript --project-id swavffutisgneenuzdoh --schema public > src/types/supabase.ts
 
 export type CategoriesProps = {
+	id: number
 	name: string
+	poster_url?: string | null
+	description?: string | null
 	subcategories: Tables<'subcategories'>[]
 }
 

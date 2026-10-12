@@ -3,23 +3,25 @@ import { createClient } from '@/utils/supabase/server'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { cache } from 'react'
-import { fallbackProducts } from '@/actions/pdoducts'
-
 const getProduct = cache(async (productId: number) => {
 	try {
 		const supabase = await createClient()
-		const { data } = await supabase
+		const { data, error } = await supabase
 			.from('products')
 			.select('*')
 			.eq('id', productId)
 			.maybeSingle()
 
-		if (data) return data
-	} catch (e) {
-		console.warn('Supabase product fetch fallback:', e)
-	}
+		if (error) {
+			console.error('Supabase product fetch error:', error)
+			return null
+		}
 
-	return fallbackProducts.find((p) => p.id === productId) || fallbackProducts[0] || null
+		return data
+	} catch (e) {
+		console.error('Supabase product fetch exception:', e)
+		return null
+	}
 })
 
 export const generateMetadata = async ({
